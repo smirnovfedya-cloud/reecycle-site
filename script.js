@@ -1,6 +1,0 @@
-
-const items=[{name:'Aluminium can',icon:'рџҐ«',bin:'recycle'},{name:'Banana peel',icon:'рџЌЊ',bin:'organics'},{name:'Greasy pizza box',icon:'рџЌ•',bin:'landfill'},{name:'Glass bottle',icon:'рџЌѕ',bin:'recycle'},{name:'Coffee grounds',icon:'в•',bin:'organics'},{name:'Plastic film',icon:'рџ›ЌпёЏ',bin:'landfill'}];
-let turn=0,score=0;const waste=document.querySelector('#waste'),label=document.querySelector('#item-label'),feedback=document.querySelector('#feedback');
-function show(){const x=items[turn];waste.textContent=x.icon;label.textContent=x.name;document.querySelector('#round').textContent=`ROUND ${turn+1} / ${items.length}`;feedback.textContent='Tap the right bin to sort it.';waste.style.transform='rotate(0deg) scale(1)'}
-document.querySelectorAll('[data-bin]').forEach(b=>b.addEventListener('click',()=>{const right=b.dataset.bin===items[turn].bin;if(right){score+=10;feedback.textContent='Correct. ThatвЂ™s a cleaner waste stream.';waste.style.transform='scale(.72) translateY(-20px)';}else feedback.textContent='Not quite вЂ” waste sorting is full of surprises.';document.querySelector('#score').textContent=String(score).padStart(2,'0');setTimeout(()=>{turn=(turn+1)%items.length;show()},right?700:1100)}));show();
-
