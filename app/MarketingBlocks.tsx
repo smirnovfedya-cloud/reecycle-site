@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { useState, type CSSProperties, type ReactNode } from "react";
 
 export const whatsappNumber = "971528518783";
 export const whatsappHref = `https://wa.me/${whatsappNumber}`;
@@ -119,36 +119,116 @@ export function IndependenceBlock({ compact = false }: { compact?: boolean }) {
 }
 
 export function WasteControlPanel({ current = "" }: { current?: RouteKey }) {
+  const [activeView, setActiveView] = useState<"stats" | "impact" | "map">("stats");
+  const materialRows = [
+    ["Plastic", "1,246 kg", "72%"],
+    ["Cardboard", "938 kg", "55%"],
+    ["Paper", "566 kg", "34%"],
+    ["Aluminium", "422 kg", "25%"],
+  ];
+
   return (
     <section className="wcp-section section-pad" id="control-panel">
       <div className="wcp-copy">
         <span className="section-index">CONTROL / WASTE CONTROL PANEL</span>
-        <p className="kicker">One operating view for waste</p>
-        <h2>Stop rebuilding the same report every month.</h2>
-        <p>Operator PDFs, procurement files, invoices and site spreadsheets rarely agree. The Waste Control Panel brings each stream, collection and outcome into one place — so Sustainability and ESG teams can see what changed and report it without chasing five departments.</p>
-        <ul>
-          <li>Material weights and contamination by site</li>
-          <li>Landfill diversion and verified destinations</li>
-          <li>CO₂ avoided, rebates and recovered value</li>
-          <li>Month-on-month signals for corrective action</li>
-        </ul>
-        <a href={routeHref("recycling", current)} className="text-link">See recycling & reporting <Arrow /></a>
+        <p className="kicker">Your waste operation, in one view</p>
+        <h2>From every collection to one usable record.</h2>
+        <p>Waste data normally arrives as operator PDFs, invoices and site spreadsheets that do not agree. The Waste Control Panel connects what was collected, where it came from, what it contained and the impact it created.</p>
+        <div className="wcp-feature-list">
+          <article><span>01</span><div><b>Stats</b><p>Recyclable, compostable and general waste — broken down by material, site and collection.</p></div></article>
+          <article><span>02</span><div><b>Impact</b><p>CO₂ avoided, energy saved and location-level performance in the same reporting period.</p></div></article>
+          <article><span>03</span><div><b>Operations</b><p>Routes, stops, bags and collection records behind the monthly number.</p></div></article>
+        </div>
+        <div className="wcp-copy-actions">
+          <a href={routeHref("recycling", current)} className="text-link">See recycling & reporting <Arrow /></a>
+          <a href="https://platform.reecycle.app/" target="_blank" rel="noreferrer" className="wcp-login-link">Client login <Arrow /></a>
+        </div>
       </div>
-      <div className="wcp-console" aria-label="Waste Control Panel product preview">
-        <div className="wcp-bar"><span>REE / WASTE CONTROL PANEL</span><div><i /> LIVE DATA</div></div>
-        <div className="wcp-kpis">
-          <article><span>LANDFILL DIVERSION</span><strong>78.4<small>%</small></strong><em>↑ 12.6 this month</em></article>
-          <article><span>RECOVERED MATERIAL</span><strong>4,286<small> kg</small></strong><em>6 verified streams</em></article>
-          <article><span>DATA COVERAGE</span><strong>100<small>%</small></strong><em>all active collections</em></article>
+      <div className="wcp-product" aria-label="Interactive Waste Control Panel product preview">
+        <div className="wcp-product-bar">
+          <div className="wcp-product-brand"><strong>R<span>EE</span></strong><i /> <b>Waste Control Panel</b></div>
+          <div className="wcp-product-status"><i /> DATA CONNECTED</div>
         </div>
-        <div className="wcp-chart">
-          <div className="wcp-chart-head"><span>RECOVERY BY MONTH</span><b>JAN — JUN</b></div>
-          {[42, 51, 49, 67, 72, 84].map((value, index) => <i key={index} style={{ "--bar": `${value}%` } as React.CSSProperties}><span>{value}</span></i>)}
+        <div className="wcp-product-shell">
+          <nav className="wcp-product-nav" aria-label="Waste Control Panel views">
+            <span>VIEW</span>
+            {(["stats", "impact", "map"] as const).map((view) => (
+              <button type="button" key={view} className={activeView === view ? "is-active" : ""} onClick={() => setActiveView(view)} aria-pressed={activeView === view}>
+                <i aria-hidden="true">{view === "stats" ? "▥" : view === "impact" ? "◉" : "⌖"}</i>{view}
+              </button>
+            ))}
+            <span>OPERATE</span>
+            <button type="button"><i aria-hidden="true">↗</i>Routes</button>
+            <button type="button"><i aria-hidden="true">≡</i>Collections</button>
+          </nav>
+          <div className="wcp-product-screen">
+            <div className="wcp-screen-title">
+              <div><small>DASHBOARD / {activeView.toUpperCase()}</small><h3>{activeView === "stats" ? "Recycling Dashboard" : activeView === "impact" ? "Environmental Impact" : "Collection Map"}</h3></div>
+              <button type="button">EXPORT <span>↓</span></button>
+            </div>
+            <div className="wcp-filters" aria-label="Dashboard filters">
+              <span><small>PERIOD</small>This month <b>⌄</b></span>
+              <span><small>CUSTOMER</small>All customers <b>⌄</b></span>
+              <span><small>LOCATION</small>All sites <b>⌄</b></span>
+            </div>
+
+            {activeView === "stats" && (
+              <div className="wcp-stats-view">
+                <article className="wcp-waste-card">
+                  <div className="wcp-card-label"><span>TOTAL WASTE COLLECTED</span><small>4,286 kg</small></div>
+                  <div className="wcp-waste-mix">
+                    <div className="wcp-donut"><strong>74<small>%</small></strong><span>RECOVERABLE</span></div>
+                    <div className="wcp-legend">
+                      <span><i className="recyclable" /><b>Recyclable</b><em>74% / 3,172 kg</em></span>
+                      <span><i className="compostable" /><b>Compostable</b><em>8% / 343 kg</em></span>
+                      <span><i className="general" /><b>General waste</b><em>18% / 771 kg</em></span>
+                    </div>
+                  </div>
+                </article>
+                <article className="wcp-material-card">
+                  <div className="wcp-card-label"><span>RECYCLED MATERIAL</span><small>WEIGHT / COLLECTIONS</small></div>
+                  {materialRows.map(([name, weight, width]) => <div className="wcp-material-row" key={name}><span>{name}</span><i><b style={{ "--fill": width } as CSSProperties} /></i><strong>{weight}</strong></div>)}
+                </article>
+                <article className="wcp-log-card">
+                  <div className="wcp-card-label"><span>LATEST COLLECTIONS</span><small>VERIFIED RECORDS</small></div>
+                  <div className="wcp-log-head"><span>DATE</span><span>SITE</span><span>STREAM</span><span>WEIGHT</span></div>
+                  {[["12 AUG", "DUBAI / 03", "Plastic + cans", "184 kg"], ["10 AUG", "DUBAI / 01", "Cardboard", "326 kg"], ["07 AUG", "ABU DHABI / 02", "Mixed recycling", "211 kg"]].map((row) => <div className="wcp-log-row" key={row.join()}>{row.map((cell) => <span key={cell}>{cell}</span>)}</div>)}
+                </article>
+              </div>
+            )}
+
+            {activeView === "impact" && (
+              <div className="wcp-impact-view">
+                <article className="wcp-impact-metric"><span>CO₂ AVOIDED</span><strong>3,840<small> kg CO₂-e</small></strong><div><i style={{ "--fill": "82%" } as CSSProperties} /><b>82% from recyclable streams</b></div></article>
+                <article className="wcp-impact-metric"><span>ENERGY SAVED</span><strong>8,612<small> kWh</small></strong><div><i style={{ "--fill": "68%" } as CSSProperties} /><b>68% from material recovery</b></div></article>
+                <article className="wcp-location-impact">
+                  <div className="wcp-card-label"><span>IMPACT BY LOCATION</span><small>CO₂-E / THIS MONTH</small></div>
+                  {[["DUBAI / 01", "1,420", "88%"], ["DUBAI / 03", "1,164", "71%"], ["ABU DHABI / 02", "846", "54%"], ["DUBAI / 05", "410", "28%"]].map(([site, value, width]) => <div key={site}><span>{site}</span><i><b style={{ "--fill": width } as CSSProperties} /></i><strong>{value}</strong></div>)}
+                </article>
+                <div className="wcp-impact-note"><i>↗</i><p><b>REPORT-READY VIEW</b><br />The same period and site filters apply across waste, CO₂ and energy.</p></div>
+              </div>
+            )}
+
+            {activeView === "map" && (
+              <div className="wcp-map-view">
+                <div className="wcp-map-canvas" aria-label="Illustrative collection location map">
+                  <svg viewBox="0 0 620 310" role="img" aria-label="Collection locations across Dubai and Abu Dhabi">
+                    <path className="wcp-map-coast" d="M24 234C86 215 123 217 171 188c51-31 71-81 120-92 59-13 76 31 134 17 68-17 91-66 170-78" />
+                    <path d="M41 260L114 215 181 224 245 171 332 189 403 132 474 145 584 78M84 286L143 239M209 255L280 186M357 226L427 140M459 183L528 110" />
+                  </svg>
+                  {[["cluster-a","12","DUBAI"],["cluster-b","7","JEBEL ALI"],["cluster-c","5","ABU DHABI"],["cluster-d","3","SHARJAH"]].map(([className,count,label]) => <button type="button" className={className} key={label}><b>{count}</b><span>{label}</span></button>)}
+                  <div className="wcp-map-key"><span><i /> ACTIVE COLLECTION SITE</span><b>27 LOCATIONS</b></div>
+                </div>
+                <article className="wcp-route-summary">
+                  <div className="wcp-card-label"><span>ROUTE STATUS</span><small>THIS MONTH</small></div>
+                  <strong>96<small>%</small></strong><p>of planned stops completed</p>
+                  <div><span>STOPS <b>84 / 87</b></span><span>BAGS LOGGED <b>216</b></span><span>ACTIVE ROUTES <b>12</b></span></div>
+                </article>
+              </div>
+            )}
+          </div>
         </div>
-        <div className="wcp-streams">
-          {[['Paper & cardboard','1,824 kg','43%'],['PET & mixed plastic','986 kg','23%'],['Metals & cans','644 kg','15%'],['Other verified streams','832 kg','19%']].map(([name, weight, share]) => <div key={name}><span>{name}</span><b>{weight}</b><i>{share}</i></div>)}
-        </div>
-        <div className="demo-flag">PRODUCT INTERFACE / ILLUSTRATIVE DATA</div>
+        <div className="wcp-demo-flag"><span>PRODUCT PREVIEW</span><b>INTERFACE BASED ON THE LIVE REE PLATFORM / ILLUSTRATIVE DATA</b></div>
       </div>
     </section>
   );
