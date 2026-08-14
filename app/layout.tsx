@@ -21,15 +21,15 @@ export const metadata: Metadata = {
     shortcut: "/assets/ree-logo.svg",
   },
   openGraph: {
-    title: "REE — Make waste smaller.",
-    description: "Waste reduction is the outcome. Everything else is a tool.",
+    title: "REE — The Waste Reduction Company",
+    description: "Find what is in the bags, recover what still has value and turn the result into reportable data.",
     type: "website",
-    images: [{ url: "/og.png", width: 1732, height: 909, alt: "REE — Make waste smaller." }],
+    images: [{ url: "/og.png", width: 1732, height: 909, alt: "REE — The Waste Reduction Company" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "REE — Make waste smaller.",
-    description: "The Waste Reduction Company · UAE",
+    title: "REE — The Waste Reduction Company",
+    description: "Independent waste reduction, recycling and reporting in the UAE.",
     images: ["/og.png"],
   },
 };

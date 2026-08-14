@@ -1,29 +1,30 @@
 "use client";
 
-const Bottle=()=> <span className="waste-icon bottle"><i/><b>01</b><em/></span>;
-const Can=()=> <span className="waste-icon can"><i/><b/><em/></span>;
-const Box=()=> <span className="waste-icon box"><i/><b>↗</b><em/></span>;
-const Cup=()=> <span className="waste-icon cup"><i/><b>♻</b><em/></span>;
+const Bottle = () => <span className="waste-icon bottle"><i/><b>PET</b><em/></span>;
+const Can = () => <span className="waste-icon can"><i/><b/><em>ALU</em></span>;
+const Carton = () => <span className="waste-icon carton"><i/><b>PAP</b><em/></span>;
+const Jar = () => <span className="waste-icon jar"><i/><b>GL</b><em/></span>;
 
 export default function RadarMachine() {
-  const items=[Bottle,Can,Box,Cup,Bottle,Can,Box,Cup];
-  return <div className="machine" aria-label="A stream of waste passes through the REE reduction machine and becomes value">
-    <div className="machine-flow">{items.map((Icon,i)=><i className="flow-item" key={i} style={{"--i":i} as React.CSSProperties}><Icon/></i>)}</div>
-    <div className="belt belt-in"><i/><i/><i/><i/><i/><i/></div>
-    <div className="ree-engine">
-      <span className="engine-title">REE <small>REDUCTION ENGINE</small></span>
-      <div className="weigh"><b/><i/><small>WEIGH</small></div>
-      <div className="scanner"><i/><i/><span>SCAN</span></div>
-      <div className="gear gear-one"><i/><i/><i/><i/><i/><i/></div>
-      <div className="gear gear-two"><i/><i/><i/><i/><i/><i/></div>
-      <div className="sort-gate"><i/><b/><em/><span>SORT</span></div>
-      <div className="press"><i/><b/><span>REDUCE</span></div>
-      <div className="material-run" aria-hidden="true">{Array.from({length:5},(_,i)=><i key={i} style={{"--i":i} as React.CSSProperties}/>)}</div>
-      <div className="data-ticks"><i/><i/><i/><i/><i/></div>
+  const items = [Bottle, Can, Carton, Jar, Bottle, Can, Carton, Bottle, Jar, Can, Bottle, Carton];
+  return <div className="machine" aria-label="Bottles, cans, cartons and jars fall into the REE reduction engine and leave as returned value">
+    <div className="waste-rain" aria-hidden="true">
+      {items.map((Icon,index)=><i className="rain-item" key={index} style={{"--i":index} as React.CSSProperties}><Icon/></i>)}
     </div>
-    <div className="belt belt-out"><i/><i/><i/><i/></div>
-    <div className="coin-chute"><b>VALUE OUT</b><i>→</i></div>
-    <div className="coins">{Array.from({length:9},(_,i)=><i key={i} style={{"--i":i} as React.CSSProperties}><b>+</b></i>)}</div>
-    <div className="machine-caption"><span>WASTE IN</span><b>WEIGH · SCAN · SORT · REDUCE</b><strong>VALUE OUT</strong></div>
+    <div className="intake-funnel"><span>WASTE INPUT</span><i/><b/></div>
+    <div className="ree-engine">
+      <div className="engine-title"><strong>REE</strong><small>REDUCTION ENGINE / UAE</small><i>LIVE</i></div>
+      <div className="process-rail" aria-hidden="true"><i/><i/><i/><i/></div>
+      <div className="process-stage stage-weigh"><span>01</span><b/><i/><small>WEIGH</small></div>
+      <div className="process-stage stage-scan"><span>02</span><b/><i/><small>SCAN</small></div>
+      <div className="process-stage stage-sort"><span>03</span><b/><i/><small>SORT</small></div>
+      <div className="process-stage stage-press"><span>04</span><b/><i/><small>REDUCE</small></div>
+      <div className="process-material" aria-hidden="true">{Array.from({length:6},(_,index)=><i key={index} style={{"--i":index} as React.CSSProperties}/>)}</div>
+      <div className="engine-readout"><span>DATA CAPTURED</span><i/><i/><i/><i/><i/><b>→</b></div>
+      <div className="output-port"><span>VALUE OUT</span><i>→</i></div>
+    </div>
+    <div className="coin-stream" aria-hidden="true">
+      {Array.from({length:7},(_,index)=><i key={index} style={{"--i":index} as React.CSSProperties}><b>+</b></i>)}
+    </div>
   </div>;
 }
