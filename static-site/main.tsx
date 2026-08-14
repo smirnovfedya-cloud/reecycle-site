@@ -2,6 +2,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import Home from "../app/page";
 import { AboutPage, ServicePage } from "../app/ServicePages";
+import WorkshopsPage from "../app/WorkshopsPage";
 import "../app/globals.css";
 
 const segments = window.location.pathname.replace(/\/+$/, "").split("/").filter(Boolean);
@@ -9,6 +10,7 @@ const route = segments.at(-1) === "index.html" ? segments.at(-2) || "home" : seg
 
 function CurrentPage() {
   if (route === "recycling" || route === "consulting" || route === "products") return <ServicePage type={route} />;
+  if (route === "workshops") return <WorkshopsPage />;
   if (route === "about") return <AboutPage />;
   return <Home />;
 }

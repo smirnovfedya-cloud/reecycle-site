@@ -6,7 +6,7 @@ export const whatsappNumber = "971528518783";
 export const whatsappHref = `https://wa.me/${whatsappNumber}`;
 export const siteVisitHref = `${whatsappHref}?text=${encodeURIComponent("Hi REE, I would like to book a free site visit.")}`;
 
-export type RouteKey = "" | "recycling" | "consulting" | "products" | "about";
+export type RouteKey = "" | "recycling" | "consulting" | "products" | "workshops" | "about";
 
 export function routeHref(route: RouteKey, current: RouteKey = "") {
   if (!route) return current ? "../" : "./";
@@ -55,6 +55,7 @@ export function SiteHeader({ current = "" }: { current?: RouteKey }) {
         <a className={current === "recycling" ? "active" : ""} href={routeHref("recycling", current)}>Recycling</a>
         <a className={current === "consulting" ? "active" : ""} href={routeHref("consulting", current)}>Consulting</a>
         <a className={current === "products" ? "active" : ""} href={routeHref("products", current)}>Products</a>
+        <a className={current === "workshops" ? "active" : ""} href={routeHref("workshops", current)}>Workshops</a>
         <a className={current === "about" ? "active" : ""} href={routeHref("about", current)}>About</a>
       </div>
       <a className="nav-cta" href={siteVisitHref} target="_blank" rel="noreferrer"><i /> Free site visit <Arrow /></a>
@@ -156,7 +157,7 @@ export function WasteControlPanel({ current = "" }: { current?: RouteKey }) {
 export function CredibilityBlock({ current = "" }: { current?: RouteKey }) {
   return (
     <section className="credibility-block section-pad">
-      <div className="credibility-photo" style={{ backgroundImage: `linear-gradient(0deg,rgba(4,25,18,.38),rgba(4,25,18,.05)),url('${assetHref("real/06-recycling.png", current)}')` }}>
+      <div className="credibility-photo" style={{ backgroundImage: `linear-gradient(0deg,rgba(4,25,18,.38),rgba(4,25,18,.05)),url('${assetHref("operations-facility-v1.webp", current)}')` }}>
         <span>RAS AL KHOR / DUBAI</span>
       </div>
       <div className="credibility-copy">
@@ -176,7 +177,7 @@ export function SiteFooter({ current = "" }: { current?: RouteKey }) {
     <>
       <footer className="site-footer">
         <a href={routeHref("", current)} className="site-footer-brand"><img src={assetHref("ree-logo.svg", current)} alt="REE" /><span>The Waste Reduction Company</span></a>
-        <div><span>EXPLORE</span><a href={routeHref("recycling", current)}>Recycling & reporting</a><a href={routeHref("consulting", current)}>Waste reduction consulting</a><a href={routeHref("products", current)}>Products & workshops</a><a href={routeHref("about", current)}>About REE</a></div>
+        <div><span>EXPLORE</span><a href={routeHref("recycling", current)}>Recycling & reporting</a><a href={routeHref("consulting", current)}>Waste reduction consulting</a><a href={routeHref("products", current)}>Circular products</a><a href={routeHref("workshops", current)}>Hands-on workshops</a><a href={routeHref("about", current)}>About REE</a></div>
         <div><span>CONTACT</span><a href={whatsappHref} target="_blank" rel="noreferrer">+971 52 851 8783</a><a href="mailto:jaskaran@reecycle.app">jaskaran@reecycle.app</a><p>Dubai & Abu Dhabi, UAE</p></div>
         <div className="site-footer-cta"><span>YOUR FIRST STEP</span><ActionLink href={siteVisitHref}>Book a free site visit</ActionLink></div>
         <small>© {new Date().getFullYear()} REE Waste Collection and Treatment</small>

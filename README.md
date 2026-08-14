@@ -7,7 +7,8 @@ Marketing website for REE’s UAE waste reduction, recycling, consulting, circul
 - `/` — company overview and primary conversion path
 - `/recycling/` — recycling, physical sorting, reporting and Waste Control Panel
 - `/consulting/` — waste audits and implementation-led consulting
-- `/products/` — circular products and hands-on workshops
+- `/products/` — locally made circular products
+- `/workshops/` — hands-on office recycling workshops
 - `/about/` — team, facility and operating approach
 
 ## Local development

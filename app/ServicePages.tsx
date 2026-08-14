@@ -1,5 +1,7 @@
 "use client";
 
+import { FormEvent, useState } from "react";
+
 import {
   ActionLink,
   Arrow,
@@ -36,7 +38,7 @@ const faqContent: Record<ServiceKey, Array<[string, string]>> = {
     ["Can a product be made from our own collected plastic?", "Often, yes. It depends on the polymer, cleanliness, volume and fabrication method. REE will confirm feasibility and whether your material can be kept as a distinct batch."],
     ["What can REE make?", "Typical formats include furniture, awards, trophies, medals, gifts, display pieces and branded objects. A reference image or rough sketch is enough to start a feasibility discussion."],
     ["Is there a minimum order?", "Minimum quantities depend on the product, mould, finish and production method. REE will recommend the most practical route after reviewing the brief."],
-    ["Can the workshop come to our office?", "Yes. REE can bring compact equipment, prepared material and moulds to offices and event venues, subject to the group size and site requirements."],
+    ["What will affect price and lead time?", "Product size, quantity, mould requirements, finishing, branding and whether client-owned material needs to remain a separate batch all affect the route. A reference image and rough quantity are enough for a first feasibility check."],
   ],
 };
 
@@ -65,9 +67,9 @@ const serviceData = {
     image: "consulting-audit-v3.png",
   },
   products: {
-    kicker: "CIRCULAR PRODUCTS & WORKSHOPS / MADE IN UAE",
+    kicker: "CIRCULAR PRODUCTS / MADE IN UAE",
     title: <>Turn local waste<br /><em>into something people keep.</em></>,
-    intro: "Custom gifts, awards, furniture and hands-on workshops — designed and made in the UAE from locally collected plastic waste.",
+    intro: "Custom gifts, awards and furniture — designed and made in the UAE from locally collected plastic waste.",
     proof: ["Custom design", "Local fabrication", "A story people can touch"],
     image: "circular-products-v3.png",
   },
@@ -109,7 +111,14 @@ function RecyclingPage() {
       </section>
       <section className="capability-section section-pad">
         <div className="section-heading"><span className="section-index">WHAT REE RUNS</span><div><p className="kicker">We fix the system, not the symptom</p><h2>From the first bin<br />to the final number.</h2></div></div>
-        <div className="capability-grid">{capabilities.map(([number,title,copy]) => <article key={number}><span>{number}</span><h3>{title}</h3><p>{copy}</p></article>)}</div>
+        <div className="recycling-route-visual">
+          <figure className="recycling-route-photo"><img src={assetHref("recycling-route-v1.webp","recycling")} alt="REE collection team moving separated plastic from a client site" /><figcaption><b>CLIENT SITE / DUBAI</b><span>The route is designed around the real back-of-house operation.</span></figcaption></figure>
+          <div className="journey-flow" aria-label="REE recycling service route">
+            {capabilities.map(([number,title,copy], index) => <article key={number}>
+              <span>{number}</span><div><h3>{title}</h3><p>{copy}</p></div><i aria-hidden="true">{index < capabilities.length - 1 ? "↘" : "✓"}</i>
+            </article>)}
+          </div>
+        </div>
       </section>
       <IndependenceBlock compact />
       <WasteControlPanel current="recycling" />
@@ -150,6 +159,10 @@ function ConsultingPage() {
         <div><span className="section-index">NOT A DESK EXERCISE</span><p className="kicker">The bags are part of the brief</p><h2>We do not study waste from a cosy office.</h2></div>
         <div><p>REE was built inside UAE recycling and material recovery. We know why material gets rejected, how contamination appears, what buyers will accept and what the collection route can realistically deliver.</p><blockquote>That means the recommendation survives contact with the waste room.</blockquote></div>
       </section>
+      <section className="audit-storyboard section-pad">
+        <div className="audit-storyboard-photo"><img src={assetHref("consulting-field-audit-v1.webp","consulting")} alt="REE consultants opening, sorting and weighing waste during a site audit" /><div className="audit-marker marker-open"><b>01 / OPEN</b><span>See the real composition</span></div><div className="audit-marker marker-sort"><b>02 / SORT</b><span>Separate material streams</span></div><div className="audit-marker marker-weigh"><b>03 / WEIGH</b><span>Build the baseline</span></div><div className="audit-marker marker-decide"><b>04 / DECIDE</b><span>Prioritise the action</span></div></div>
+        <div className="audit-storyboard-caption"><span>FIELD NOTE / THE REPORT STARTS HERE</span><p>Invoices tell us what was charged. Contractor reports tell us what was recorded. Opening the bags shows what can actually be reduced, recovered or redesigned.</p></div>
+      </section>
       <section className="consulting-problems section-pad">
         <div className="section-heading"><span className="section-index">PROBLEM → DECISION</span><div><p className="kicker">Start with the commercial problem</p><h2>Evidence before<br />recommendation.</h2></div></div>
         <div className="problem-solution-grid">{problems.map(([problem,answer],index)=><article key={problem}><span>0{index+1}</span><h3>{problem}</h3><p>{answer}</p></article>)}</div>
@@ -171,12 +184,20 @@ function ConsultingPage() {
 }
 
 function ProductsPage() {
+  const [catalogueOpen, setCatalogueOpen] = useState(false);
   const portfolio = [
     ["real/01-jumeirah_furniture_s.jpeg", "Jumeirah Eco Village", "Furniture set", "Recycled-plastic seating and table for Al Qasr Hotel."],
     ["real/02-arabian_warrior_meda.jpg", "Arabian Warrior", "Event medals", "A circular alternative to conventional race merchandise."],
     ["real/04-circular_award_2026_.png", "Circularity Awards", "Custom trophies", "Locally fabricated awards made from recovered plastic."],
     ["real/03-DSC00293.jpeg", "ADIB", "Coffee table", "A product made from waste collected through the bank’s own programme."],
   ];
+  const requestCatalogue = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const message = `Hi REE, I would like the Midori catalogue.\nName: ${String(data.get("name") || "")}\nWork email: ${String(data.get("email") || "")}\nCompany: ${String(data.get("company") || "")}`;
+    window.open(`${whatsappHref}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+    setCatalogueOpen(false);
+  };
   return (
     <><SiteHeader current="products" /><main><ServiceHero type="products" />
       <ClientStrip current="products" compact />
@@ -191,12 +212,17 @@ function ProductsPage() {
       </section>
       <section className="workshop-landing section-pad">
         <div className="workshop-landing-image" style={{backgroundImage:`linear-gradient(90deg,rgba(4,23,16,.1),rgba(4,23,16,.72)),url('${assetHref("workshop-restored-v3.png","products")}')`}} />
-        <div><span className="section-index">HANDS-ON WORKSHOPS</span><p className="kicker">A circularity story people make themselves</p><h2>Sort it. Shred it.<br />Mould it. Keep it.</h2><p>REE brings compact recycling equipment, prepared material and moulds to your office or event. Teams follow the cycle from sorting to a finished trinket — such as a coaster, badge or keyring.</p><ul><li>CSR and sustainability engagement</li><li>Team building with a tangible outcome</li><li>Compact equipment brought to your venue</li><li>Product and format adapted to the group</li></ul><ActionLink href={`${whatsappHref}?text=${encodeURIComponent("Hi REE, I would like to discuss a recycling workshop.")}`}>Plan a workshop</ActionLink></div>
+        <div><span className="section-index">HANDS-ON WORKSHOPS</span><p className="kicker">A circularity story people make themselves</p><h2>Sort it. Shred it.<br />Mould it. Keep it.</h2><p>Bring the full recycling cycle into your office. Your team handles the material, sees the machines work and leaves with a finished object.</p><ul><li>CSR and sustainability engagement</li><li>Team building with a tangible outcome</li><li>Compact equipment brought to your venue</li><li>One standard power outlet is enough</li></ul><ActionLink href={routeHref("workshops","products")}>Explore workshops</ActionLink></div>
       </section>
-      <section className="product-routes section-pad"><span className="section-index">THREE WAYS TO START</span><div>{[["MIDORI CATALOGUE","Choose from existing product formats."],["DIY WORKSHOP","Let your team make the product."],["CUSTOM FABRICATION","Build a product around your brief or material."]].map(([t,c],i)=><article key={t}><span>0{i+1}</span><h3>{t}</h3><p>{c}</p><a href={whatsappHref} target="_blank" rel="noreferrer">Discuss the route <Arrow /></a></article>)}</div></section>
+      <section className="product-routes section-pad"><span className="section-index">THREE WAYS TO START</span><div>
+        <article><div className="product-route-media" style={{backgroundImage:`url('${assetHref("circular-products-v3.png","products")}')`}}/><span>01 / READY FORMATS</span><h3>Midori catalogue</h3><p>Choose from existing furniture, gift and award formats, then adapt the colour and branding.</p><button type="button" onClick={() => setCatalogueOpen(true)}>Download the catalogue <Arrow /></button></article>
+        <article><div className="product-route-media" style={{backgroundImage:`url('${assetHref("workshop-restored-v3.png","products")}')`}}/><span>02 / TEAM EXPERIENCE</span><h3>DIY workshop</h3><p>Let your team follow the material through sorting, processing and making a finished object.</p><a href={routeHref("workshops","products")}>Explore workshops <Arrow /></a></article>
+        <article><div className="product-route-media" style={{backgroundImage:`url('${assetHref("real/01-jumeirah_furniture_s.jpeg","products")}')`}}/><span>03 / BESPOKE</span><h3>Custom fabrication</h3><p>Build a product around your brief, audience or a suitable stream of your own recovered plastic.</p><a href={`${whatsappHref}?text=${encodeURIComponent("Hi REE, I would like to discuss a custom recycled-plastic product.")}`} target="_blank" rel="noreferrer">Send a brief <Arrow /></a></article>
+      </div></section>
       <CredibilityBlock current="products" />
       <FaqSection type="products" />
       <section className="product-final section-pad"><span className="section-index">SEND THE BRIEF</span><h2>A sketch, a reference<br />or one rough idea is enough.</h2><p>We will tell you what is feasible, which material and process fit, and what will drive timing and budget.</p><ActionLink href={`${whatsappHref}?text=${encodeURIComponent("Hi REE, I have an idea for a circular product.")}`}>Send your idea</ActionLink></section>
+      {catalogueOpen && <div className="catalogue-modal" role="presentation" onMouseDown={() => setCatalogueOpen(false)}><section className="catalogue-panel" role="dialog" aria-modal="true" aria-labelledby="catalogue-title" onMouseDown={(event) => event.stopPropagation()}><button className="catalogue-close" type="button" onClick={() => setCatalogueOpen(false)} aria-label="Close catalogue form">×</button><span className="section-index">MIDORI / PRODUCT CATALOGUE</span><h2 id="catalogue-title">Where should we send it?</h2><p>Leave your details and the REE team will send the latest catalogue to your work email.</p><form onSubmit={requestCatalogue}><label>Name<input name="name" autoComplete="name" required /></label><label>Work email<input name="email" type="email" autoComplete="email" required /></label><label>Company <small>optional</small><input name="company" autoComplete="organization" /></label><button type="submit">Request the catalogue <Arrow /></button><small>Submitting opens a pre-filled WhatsApp request so the team can send the current PDF.</small></form></section></div>}
     </main><SiteFooter current="products" /></>
   );
 }
@@ -216,9 +242,14 @@ export function AboutPage() {
       <section className="about-hero"><div><span className="eyebrow"><i /> ABOUT REE / UAE</span><h1>We work in the second-oldest profession.<br /><em>Waste.</em></h1><p>And in one of the most misunderstood industries in the UAE. REE exists to give businesses a clearer view of what they throw away — and a practical route to less.</p><div><ActionLink href={siteVisitHref}>Visit our facility</ActionLink><ActionLink href={whatsappHref} light>Chat with REE</ActionLink></div></div></section>
       <ClientStrip current="about" compact />
       <section className="founder-story section-pad"><div><span className="section-index">WHY REE EXISTS</span><p className="kicker">The missing information is inside the bags</p><h2>Companies pay for waste management without knowing what they get.</h2></div><div><p>They receive weights without composition, destinations without proof and reports that rarely help the operation improve. REE was built to close that gap.</p><p>We combine physical waste work, operating design and usable data. The goal is not “more recycling activity”. The goal is less waste — with enough evidence to show how it happened.</p></div></section>
+      <section className="about-operations-mosaic section-pad" aria-label="REE operations in Dubai">
+        <figure className="operations-main"><img src={assetHref("operations-facility-v1.webp","about")} alt="REE operations team sorting material and making recycled-plastic products in Dubai" /><figcaption><b>THE OPERATION</b><span>One team connects sorting, evidence and fabrication.</span></figcaption></figure>
+        <figure><img src={assetHref("consulting-audit-v3.png","about")} alt="REE team carrying out a physical waste audit" /><figcaption><b>SORT + MEASURE</b><span>Answers start at the material level.</span></figcaption></figure>
+        <figure><img src={assetHref("circular-products-v3.png","about")} alt="Furniture made from locally recovered plastic" /><figcaption><b>MAKE + RETURN</b><span>Selected plastic comes back as a useful object.</span></figcaption></figure>
+      </section>
       <section className="belief-grid section-pad">{[["01","Waste is often misreported","When one chain owns the truck, facility and disposal route, there is little incentive to inspect the number."],["02","Waste is an asset","A bottle can still contain material value, product value and proof of environmental progress."],["03","You cannot change what you cannot see","Good data creates the feedback loop that changes procurement, operations and behaviour."]].map(([n,t,c])=><article key={n}><span>{n}</span><h3>{t}</h3><p>{c}</p></article>)}</section>
       <section className="team-section section-pad"><div><span className="section-index">THE TEAM</span><p className="kicker">Operators, makers and waste people</p><h2>The work is physical.<br />So is the expertise.</h2></div><div className="team-list">{team.map(([name,role],i)=><article key={name}><span>0{i+1}</span><h3>{name}</h3><p>{role}</p></article>)}</div></section>
-      <section className="facility-section section-pad"><div className="facility-image" style={{backgroundImage:`url('${assetHref("real/05-44e0ff4f-8544-4313-9.jpg","about")}')`}}/><div><span className="section-index">RAS AL KHOR INDUSTRIAL ESTATE / DUBAI</span><p className="kicker">The facility is part of the method</p><h2>See the sorting, the data and the products in one visit.</h2><p>Every bag we audit comes here. Materials are opened, separated and weighed. Selected plastics move into the fabrication process. The Waste Control Panel turns the operating record into a view the client can use.</p><blockquote>Thirty minutes at our facility will show you more about your waste than ten years of reports.</blockquote><ActionLink href={siteVisitHref}>Book a free facility visit</ActionLink></div></section>
+      <section className="facility-section section-pad"><div className="facility-image" style={{backgroundImage:`url('${assetHref("operations-facility-v1.webp","about")}')`}}/><div><span className="section-index">RAS AL KHOR INDUSTRIAL ESTATE / DUBAI</span><p className="kicker">The facility is part of the method</p><h2>See the sorting, the data and the products in one visit.</h2><p>Every bag we audit comes here. Materials are opened, separated and weighed. Selected plastics move into the fabrication process. The Waste Control Panel turns the operating record into a view the client can use.</p><blockquote>Thirty minutes at our facility will show you more about your waste than ten years of reports.</blockquote><ActionLink href={siteVisitHref}>Book a free facility visit</ActionLink></div></section>
       <section className="about-framework section-pad"><div><span className="section-index">THE REE FRAMEWORK</span><h2>Diagnose.<br />Action.<br />Control.</h2></div><div><p>Diagnosis gives action a reason. Action gives control something to measure. Control feeds the next diagnosis. Remove one and the waste-reduction loop breaks.</p><div>{[["01","DIAGNOSE","Open every stream and find the real baseline."],["02","ACTION","Build the route, bins, recovery and behaviour change."],["03","CONTROL","Track the result and correct the operation."]].map(([n,t,c])=><article key={n}><span>{n}</span><h3>{t}</h3><p>{c}</p></article>)}</div></div></section>
       <SiteVisitBand current="about" title="Come and see what happens after the bag leaves your site." />
     </main><SiteFooter current="about" /></>

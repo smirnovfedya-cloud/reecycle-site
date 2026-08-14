@@ -16,6 +16,7 @@ export default defineConfig({
         recycling: resolve(process.cwd(), "static-site/recycling/index.html"),
         consulting: resolve(process.cwd(), "static-site/consulting/index.html"),
         products: resolve(process.cwd(), "static-site/products/index.html"),
+        workshops: resolve(process.cwd(), "static-site/workshops/index.html"),
         about: resolve(process.cwd(), "static-site/about/index.html"),
       },
     },

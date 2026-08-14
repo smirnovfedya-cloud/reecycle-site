@@ -29,10 +29,10 @@ const services = [
   {
     number: "03",
     slug: "products",
-    title: "Products & workshops",
-    copy: "Custom furniture, awards and gifts made in the UAE — plus hands-on workshops that let teams experience the recycling cycle.",
-    route: ["Brief", "Design", "Make", "Engage"],
-    tags: ["Made in UAE", "Circular engagement"],
+    title: "Circular products",
+    copy: "Custom furniture, awards and gifts designed and made in the UAE from locally collected plastic waste.",
+    route: ["Brief", "Design", "Fabricate", "Deliver"],
+    tags: ["Made in UAE", "Local waste"],
     href: routeHref("products"),
   },
 ];
@@ -136,6 +136,7 @@ export default function Home() {
           <a href={routeHref("recycling")}>Recycling</a>
           <a href={routeHref("consulting")}>Consulting</a>
           <a href={routeHref("products")}>Products</a>
+          <a href={routeHref("workshops")}>Workshops</a>
           <a href={routeHref("about")}>About</a>
         </div>
         <a className="nav-cta" href={siteVisitHref} target="_blank" rel="noreferrer"><i /> Free site visit <Arrow /></a>
@@ -249,7 +250,7 @@ export default function Home() {
         <div className="workshop-image" role="img" aria-label="REE hands-on recycling workshop with compact equipment" />
         <div className="workshop-overlay">
           <div className="section-index">04 / MAKE IT REAL</div>
-          <div><p className="kicker">Products & workshops</p><h2>Touch the<br /><em>whole cycle.</em></h2><p>Custom objects make circularity tangible. Hands-on workshops let your team sort, shred, mould and take the result home.</p><ActionLink href={routeHref("products")}>Explore products & workshops</ActionLink></div>
+          <div><p className="kicker">Hands-on workshops</p><h2>Touch the<br /><em>whole cycle.</em></h2><p>Bring a compact recycling line into your office. Your team sorts, processes and moulds plastic into a finished object they can keep.</p><ActionLink href={routeHref("workshops")}>Explore workshops</ActionLink></div>
         </div>
       </section>
 

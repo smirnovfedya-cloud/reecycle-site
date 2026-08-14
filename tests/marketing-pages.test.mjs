@@ -8,6 +8,7 @@ const routes = [
   ["static-site/recycling/index.html", "https://reecycle.app/recycling/"],
   ["static-site/consulting/index.html", "https://reecycle.app/consulting/"],
   ["static-site/products/index.html", "https://reecycle.app/products/"],
+  ["static-site/workshops/index.html", "https://reecycle.app/workshops/"],
   ["static-site/about/index.html", "https://reecycle.app/about/"],
 ];
 
@@ -35,10 +36,11 @@ test("the sitemap covers every canonical route", async () => {
 });
 
 test("commercial priorities are present and the calculator stays archived", async () => {
-  const [home, blocks, pages] = await Promise.all([
+  const [home, blocks, pages, workshops] = await Promise.all([
     readFile(new URL("app/page.tsx", root), "utf8"),
     readFile(new URL("app/MarketingBlocks.tsx", root), "utf8"),
     readFile(new URL("app/ServicePages.tsx", root), "utf8"),
+    readFile(new URL("app/WorkshopsPage.tsx", root), "utf8"),
   ]);
   assert.match(home, /The Waste/);
   assert.match(home, /Reduction Company/);
@@ -48,6 +50,8 @@ test("commercial priorities are present and the calculator stays archived", asyn
   assert.match(blocks, /We do not own a landfill/);
   assert.match(pages, /19,679 kg reported/);
   assert.match(pages, /523 kg verified/);
+  assert.match(workshops, /One ordinary outlet/);
+  assert.match(workshops, /Can we use plastic collected in our own office/);
   assert.doesNotMatch(home, /ArchivedImpactCalculator|ImpactCalculator/);
 });
 
