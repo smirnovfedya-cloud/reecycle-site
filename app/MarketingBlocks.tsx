@@ -4,7 +4,8 @@ import { useState, type CSSProperties, type ReactNode } from "react";
 
 export const whatsappNumber = "971528518783";
 export const whatsappHref = `https://wa.me/${whatsappNumber}`;
-export const siteVisitHref = `${whatsappHref}?text=${encodeURIComponent("Hi REE, I would like to book a free site visit.")}`;
+export const siteVisitHref = `${whatsappHref}?text=${encodeURIComponent("Hi REE, I would like to book a free site visit at my business location.")}`;
+export const facilityVisitHref = `${whatsappHref}?text=${encodeURIComponent("Hi REE, I would like to ask about visiting the REE facility.")}`;
 
 export type RouteKey = "" | "recycling" | "consulting" | "products" | "workshops" | "about";
 
@@ -39,7 +40,7 @@ export function ActionLink({
   const external = href.startsWith("http") || href.startsWith("mailto:");
   return (
     <a className={`action-link${light ? " action-light" : ""}${className ? ` ${className}` : ""}`} href={href} target={external ? "_blank" : undefined} rel={external ? "noreferrer" : undefined}>
-      <span>{children}</span><i><Arrow /></i>
+      <span>{children}{external ? <span className="sr-only"> (opens in a new tab)</span> : null}</span><i><Arrow /></i>
     </a>
   );
 }
@@ -58,7 +59,7 @@ export function SiteHeader({ current = "" }: { current?: RouteKey }) {
         <a className={current === "workshops" ? "active" : ""} href={routeHref("workshops", current)}>Workshops</a>
         <a className={current === "about" ? "active" : ""} href={routeHref("about", current)}>About</a>
       </div>
-      <a className="nav-cta" href={siteVisitHref} target="_blank" rel="noreferrer"><i /> Free site visit <Arrow /></a>
+      <a className="nav-cta" href={siteVisitHref} target="_blank" rel="noreferrer" aria-label="Book a free site visit at your business on WhatsApp; opens in a new tab"><i /> Free site visit <Arrow /></a>
     </nav>
   );
 }
@@ -75,7 +76,7 @@ const clients = [
 export function ClientStrip({ current = "", compact = false }: { current?: RouteKey; compact?: boolean }) {
   return (
     <section className={`client-strip${compact ? " client-strip-compact" : ""}`} aria-label="Selected REE clients">
-      <div className="client-intro"><span>Trusted by teams at</span><b>SELECTED UAE CLIENTS</b></div>
+      <div className="client-intro"><span>Trusted by teams at</span><b>UAE CLIENTS</b></div>
       <div className="client-track">
         {clients.map((client) => <div className="client-logo" key={client.id}><img src={assetHref(`client-${client.id}.webp`, current)} alt={`${client.name} client logo`} /></div>)}
       </div>
@@ -87,12 +88,12 @@ export function SiteVisitBand({ current = "", title = "Start with what is actual
   return (
     <section className="site-visit-band section-pad">
       <div>
-        <span className="section-index">FREE SITE VISIT / UAE</span>
+        <span className="section-index">FREE SITE VISIT / AT YOUR BUSINESS</span>
         <h2>{title}</h2>
       </div>
       <div>
-        <p>We walk the site, look at the bins and waste rooms, check the current contractor setup and identify the first practical opportunities. No pitch deck. No obligation. Just your waste.</p>
-        <div className="band-actions"><ActionLink href={siteVisitHref}>Book a free site visit</ActionLink><a href={whatsappHref} target="_blank" rel="noreferrer">Chat with REE <Arrow /></a></div>
+        <p>We come to your business, walk the operation, look at the bins and waste rooms, check the current contractor setup and identify the first practical opportunities. No pitch deck. No obligation. Just your waste.</p>
+        <div className="band-actions"><ActionLink href={siteVisitHref}>Book a free site visit</ActionLink><a href={whatsappHref} target="_blank" rel="noreferrer" aria-label="Chat with REE on WhatsApp; opens in a new tab">Chat with REE <Arrow /></a></div>
       </div>
     </section>
   );
@@ -107,13 +108,85 @@ export function IndependenceBlock({ compact = false }: { compact?: boolean }) {
         <h2>Your waste company picks up.<br /><em>We show you what was in the bags.</em></h2>
       </div>
       <div className="independence-evidence">
-        <p>Most waste companies are paid to move volume. REE is paid to make the material and the data visible. That difference removes the conflict between disposal and reduction.</p>
-        <div className="evidence-compare">
-          <article><span>THE USUAL CHAIN</span><strong>Collect → weigh → dispose</strong><small>The report starts with the truck, not the contents.</small></article>
-          <article><span>THE REE CHAIN</span><strong>Open → sort → weigh → route → report</strong><small>Each recoverable stream is documented before its next destination.</small></article>
+        <p>Your existing collector or FM partner can stay. REE adds the independent material and data layer between what leaves the site and what the business can confidently report.</p>
+        <div className="provider-role-map" aria-label="How REE works alongside a client's existing waste providers">
+          <article><span>01 / YOUR TEAM</span><strong>Set the goal</strong><small>Sustainability, FM and Procurement keep control of the decision.</small></article>
+          <i aria-hidden="true">→</i>
+          <article><span>02 / CURRENT PROVIDER</span><strong>Keep collecting</strong><small>The existing FM or collector can continue the agreed operating role.</small></article>
+          <i aria-hidden="true">→</i>
+          <article className="is-ree"><span>03 / REE</span><strong>Verify the material</strong><small>Open, sort, weigh, route and turn the result into usable data.</small></article>
+          <i aria-hidden="true">→</i>
+          <article><span>04 / NEXT ROUTE</span><strong>Recover by stream</strong><small>Each suitable material moves to its relevant recovery pathway.</small></article>
         </div>
-        <blockquote>“We are operators who use consulting tools — not desk consultants learning waste from a spreadsheet.”</blockquote>
+        <blockquote>Keep your current provider. Add independent control.</blockquote>
       </div>
+    </section>
+  );
+}
+
+export function IdentityBlock() {
+  return (
+    <section className="identity-block section-pad">
+      <div className="identity-heading">
+        <span className="section-index">WHAT REE IS / IS NOT</span>
+        <p className="kicker">A clear role in a complicated chain</p>
+        <h2>Independent control.<br /><em>Practical delivery.</em></h2>
+      </div>
+      <div className="identity-columns">
+        <article>
+          <span>REE IS</span>
+          <ul>
+            <li>An independent waste diagnosis, recovery and reporting layer</li>
+            <li>A hands-on operator that opens, sorts and weighs real material</li>
+            <li>An implementation partner that can work beside your current providers</li>
+          </ul>
+        </article>
+        <article>
+          <span>REE IS NOT</span>
+          <ul>
+            <li>A landfill owner or a single destination for every waste stream</li>
+            <li>A reason to replace a working FM or collection contract by default</li>
+            <li>A reporting-only consultant separated from the waste operation</li>
+          </ul>
+        </article>
+      </div>
+      <div className="ree-at-glance" aria-label="REE at a glance">
+        <span><b>UAE</b>Dubai + Abu Dhabi operations</span>
+        <span><b>LIVE</b>Waste Control Panel</span>
+        <span><b>PHYSICAL</b>Bag-level sorting and weighing</span>
+        <span><b>LOCAL</b>Plastic fabrication in Dubai</span>
+      </div>
+    </section>
+  );
+}
+
+export function MaterialPathways() {
+  return (
+    <section className="pathways-section section-pad">
+      <div className="pathways-heading">
+        <span className="section-index">WHO DOES WHAT / WHERE MATERIAL GOES</span>
+        <p className="kicker">One visible chain, several specialist routes</p>
+        <h2>REE controls the record.<br /><em>The right route handles each stream.</em></h2>
+        <p>Some work is delivered directly by REE. Final recovery depends on the material, location, volume and agreed programme. The diagram shows the operating model, not named counterparties.</p>
+      </div>
+      <div className="pathways-map" role="img" aria-label="Material flow from the client site and current collector through REE sorting and reporting to specialist recovery routes">
+        <svg viewBox="0 0 1200 560" preserveAspectRatio="none" aria-hidden="true">
+          <path className="flow-direct wide" d="M185 278 C310 278 320 278 455 278" />
+          <path className="flow-direct" d="M745 278 C855 278 860 88 1010 88" />
+          <path className="flow-partner" d="M745 278 C855 278 860 214 1010 214" />
+          <path className="flow-partner" d="M745 278 C855 278 860 342 1010 342" />
+          <path className="flow-partner" d="M745 278 C855 278 860 470 1010 470" />
+        </svg>
+        <div className="pathway-node pathway-source"><span>CLIENT + FM</span><strong>Separated material</strong><small>Your current collector can remain in the chain.</small></div>
+        <div className="pathway-node pathway-ree"><span>DIRECT / REE</span><strong>Collect where scoped<br />Open · sort · weigh<br />Record · report</strong><small>One material ledger in the Waste Control Panel.</small></div>
+        <div className="pathway-destinations">
+          <div className="pathway-node is-direct"><span>DIRECT / REE</span><strong>Selected plastics</strong><small>Local products, workshops or prepared feedstock</small></div>
+          <div className="pathway-node"><span>SPECIALIST ROUTE</span><strong>Paper + cardboard</strong><small>Paper recovery pathway</small></div>
+          <div className="pathway-node"><span>SPECIALIST ROUTE</span><strong>Metals + glass</strong><small>Material-specific recovery pathway</small></div>
+          <div className="pathway-node"><span>SPECIALIST ROUTE</span><strong>E-waste + other streams</strong><small>Appropriate specialist pathway where available</small></div>
+        </div>
+      </div>
+      <div className="pathways-legend"><span><i className="direct" /> Delivered directly by REE</span><span><i /> Delivered with a relevant recovery provider</span><small>Specific destinations and evidence are defined for each agreed client programme.</small></div>
     </section>
   );
 }
@@ -141,7 +214,7 @@ export function WasteControlPanel({ current = "" }: { current?: RouteKey }) {
         </div>
         <div className="wcp-copy-actions">
           <a href={routeHref("recycling", current)} className="text-link">See recycling & reporting <Arrow /></a>
-          <a href="https://platform.reecycle.app/" target="_blank" rel="noreferrer" className="wcp-login-link">Client login <Arrow /></a>
+          <a href="https://platform.reecycle.app/" target="_blank" rel="noreferrer" className="wcp-login-link" aria-label="Client login to the external REE Waste Control Panel; opens in a new tab">Client login <small>EXTERNAL PLATFORM</small> <Arrow /></a>
         </div>
       </div>
       <div className="wcp-product" aria-label="Interactive Waste Control Panel product preview">
@@ -245,7 +318,7 @@ export function CredibilityBlock({ current = "" }: { current?: RouteKey }) {
         <p className="kicker">Built inside the waste industry</p>
         <h2>We sort, weigh and make — in our own Dubai facility.</h2>
         <p>REE’s team brings hands-on experience across B2B and B2C recycling, material recovery, collection operations and product fabrication. Every bag we audit comes through a real operating team, not a remote reporting layer.</p>
-        <div className="credibility-facts"><span><b>5+</b> years in UAE recycling</span><span><b>Own</b> sorting & fabrication facility</span><span><b>UAE</b> Dubai and Abu Dhabi operations</span></div>
+        <div className="credibility-facts"><span><b>UAE</b> Dubai + Abu Dhabi operations</span><span><b>Live</b> Waste Control Panel</span><span><b>In-house</b> sorting & fabrication</span></div>
         <ActionLink href={routeHref("about", current)}>Meet REE</ActionLink>
       </div>
     </section>
@@ -259,10 +332,10 @@ export function SiteFooter({ current = "" }: { current?: RouteKey }) {
         <a href={routeHref("", current)} className="site-footer-brand"><img src={assetHref("ree-logo.svg", current)} alt="REE" /><span>The Waste Reduction Company</span></a>
         <div><span>EXPLORE</span><a href={routeHref("recycling", current)}>Recycling & reporting</a><a href={routeHref("consulting", current)}>Waste reduction consulting</a><a href={routeHref("products", current)}>Circular products</a><a href={routeHref("workshops", current)}>Hands-on workshops</a><a href={routeHref("about", current)}>About REE</a></div>
         <div><span>CONTACT</span><a href={whatsappHref} target="_blank" rel="noreferrer">+971 52 851 8783</a><a href="mailto:jaskaran@reecycle.app">jaskaran@reecycle.app</a><p>Dubai & Abu Dhabi, UAE</p></div>
-        <div className="site-footer-cta"><span>YOUR FIRST STEP</span><ActionLink href={siteVisitHref}>Book a free site visit</ActionLink></div>
+        <div className="site-footer-cta"><span>YOUR FIRST STEP / AT YOUR BUSINESS</span><ActionLink href={siteVisitHref}>Book a free site visit</ActionLink></div>
         <small>© {new Date().getFullYear()} REE Waste Collection and Treatment</small>
       </footer>
-      <a className="floating-whatsapp" href={whatsappHref} target="_blank" rel="noreferrer" aria-label="Chat with REE on WhatsApp"><i /><span>CHAT WITH REE</span><Arrow /></a>
+      <a className="floating-whatsapp" href={whatsappHref} target="_blank" rel="noreferrer" aria-label="Chat with REE on WhatsApp; opens in a new tab"><i /><span>CHAT WITH REE</span><Arrow /></a>
     </>
   );
 }

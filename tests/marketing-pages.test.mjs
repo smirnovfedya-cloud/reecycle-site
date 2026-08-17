@@ -48,11 +48,32 @@ test("commercial priorities are present and the calculator stays archived", asyn
   assert.match(blocks, /Book a free site visit/);
   assert.match(blocks, /Waste Control Panel/);
   assert.match(blocks, /We do not own a landfill/);
+  assert.match(blocks, /Keep your current provider\. Add independent control\./);
+  assert.match(blocks, /WHAT REE IS \/ IS NOT/);
+  assert.match(blocks, /WHO DOES WHAT \/ WHERE MATERIAL GOES/);
   assert.match(pages, /19,679 kg reported/);
   assert.match(pages, /523 kg verified/);
+  assert.doesNotMatch(pages, /STANDARD COLLECTION/);
   assert.match(workshops, /One ordinary outlet/);
   assert.match(workshops, /Can we use plastic collected in our own office/);
   assert.doesNotMatch(home, /ArchivedImpactCalculator|ImpactCalculator/);
+});
+
+test("consulting content follows the approved credibility sequence", async () => {
+  const pages = await readFile(new URL("app/ServicePages.tsx", root), "utf8");
+  const sequence = [
+    "Most businesses are flying blind",
+    "We do not study waste from a cosy office",
+    "A PRACTICAL ROUTE",
+    "REAL WASTE. REAL NUMBERS.",
+    "OPERATIONAL FIT",
+  ];
+  let cursor = -1;
+  for (const phrase of sequence) {
+    const next = pages.indexOf(phrase);
+    assert.ok(next > cursor, `${phrase} is out of sequence`);
+    cursor = next;
+  }
 });
 
 test("public contact details are normalized", async () => {

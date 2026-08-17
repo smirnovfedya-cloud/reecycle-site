@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import DacPhysics from "./DacPhysics";
 import RadarMachine from "./RadarMachine";
-import { CredibilityBlock, IndependenceBlock, SiteFooter, WasteControlPanel, routeHref, siteVisitHref, whatsappHref } from "./MarketingBlocks";
+import { CredibilityBlock, IdentityBlock, IndependenceBlock, SiteFooter, WasteControlPanel, routeHref, siteVisitHref, whatsappHref } from "./MarketingBlocks";
 
 const whatsapp = whatsappHref;
 
@@ -139,7 +139,7 @@ export default function Home() {
           <a href={routeHref("workshops")}>Workshops</a>
           <a href={routeHref("about")}>About</a>
         </div>
-        <a className="nav-cta" href={siteVisitHref} target="_blank" rel="noreferrer"><i /> Free site visit <Arrow /></a>
+        <a className="nav-cta" href={siteVisitHref} target="_blank" rel="noreferrer" aria-label="Book a free site visit at your business on WhatsApp; opens in a new tab"><i /> Free site visit <Arrow /></a>
       </nav>
 
       <section className="hero" id="top">
@@ -156,7 +156,7 @@ export default function Home() {
           <p className="hero-copy">Most waste still has value. We help businesses <strong>find it, recover it and turn it into measurable impact.</strong></p>
           <div className="hero-actions">
             <ActionLink>Chat with REE</ActionLink>
-            <a className="impact-jump site-visit-jump" href={siteVisitHref} target="_blank" rel="noreferrer"><b>↗</b><span>Book a free<br />site visit</span></a>
+            <a className="impact-jump site-visit-jump" href={siteVisitHref} target="_blank" rel="noreferrer" aria-label="Book a free site visit at your business on WhatsApp; opens in a new tab"><b>↗</b><span>Book a free site visit<br />at your business</span></a>
           </div>
         </div>
         <div className="hero-proof"><div><span>95</span><sup>%</sup></div><p>landfill diversion<br />in a UAE operation</p><i>VERIFIED CASE</i></div>
@@ -164,7 +164,7 @@ export default function Home() {
       </section>
 
       <section className="client-strip" aria-label="Selected clients">
-        <div className="client-intro"><span>Trusted by teams at</span><b>06 / SELECTED</b></div>
+        <div className="client-intro"><span>Trusted by teams at</span><b>06 / CLIENTS</b></div>
         <div className="client-track">
           {clients.map((client) => <div className="client-logo" key={client.id}><img src={`assets/client-${client.id}.webp`} alt={`${client.name} client logo`} /></div>)}
         </div>
@@ -196,10 +196,12 @@ export default function Home() {
         </div>
       </section>
 
+      <IdentityBlock />
+
       <section className="solutions section-pad" id="solutions">
         <div className="section-heading">
           <div className="section-index">02 / THE ROUTES</div>
-          <div><p className="kicker">A complete waste reduction company</p><h2>Choose a route.<br />Reach the outcome.</h2></div>
+          <div><p className="kicker">Three routes. One outcome.</p><h2>Choose a route.<br />Reach the outcome.</h2></div>
         </div>
         <div className="route-grid" id="route-cards">
           {services.map((service) => (
@@ -231,7 +233,7 @@ export default function Home() {
           <h2>Where does it<br />go next?</h2>
           <p>One wrong object can contaminate an entire stream. Some choices are deliberately tricky — just like a real office bin.</p>
           <div className="game-status"><span>ROUND {String(gameIndex + 1).padStart(2, "0")} / 11</span><b>{score} CORRECT</b></div>
-          <div className="game-site-visit"><span>Want to test your actual office bins?</span><a href={siteVisitHref} target="_blank" rel="noreferrer">Book a free site visit <Arrow /></a></div>
+          <div className="game-site-visit"><span>Want to test your actual office bins?</span><a href={siteVisitHref} target="_blank" rel="noreferrer" aria-label="Book a free site visit at your business on WhatsApp; opens in a new tab">Book a free site visit <Arrow /></a></div>
         </div>
         <div className="sort-arena" aria-live="polite">
           <div className="arena-grid" aria-hidden="true" />
@@ -297,9 +299,9 @@ export default function Home() {
         <div className="cta-material" aria-hidden="true" />
         <div className="section-index">07 / YOUR FIRST STEP</div>
         <p className="kicker">No pitch deck. No obligation. Just waste.</p>
-        <h2>Book a free<br />site visit.</h2>
-        <p>We will look at the bins, waste rooms and current operating setup — then identify the first practical opportunities.</p>
-        <div className="final-actions"><ActionLink href={siteVisitHref}>Book the visit</ActionLink><a href={whatsapp}>Chat with REE</a></div>
+        <h2>Bring REE to<br />your site.</h2>
+        <p>We will come to your business, look at the bins, waste rooms and current operating setup, then identify the first practical opportunities.</p>
+        <div className="final-actions"><ActionLink href={siteVisitHref}>Book the free site visit</ActionLink><a href={whatsapp}>Chat with REE</a></div>
       </section>
       <SiteFooter />
     </main>

@@ -1,19 +1,22 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 
 import {
   ActionLink,
   Arrow,
   ClientStrip,
   CredibilityBlock,
+  IdentityBlock,
   IndependenceBlock,
+  MaterialPathways,
   RouteKey,
   SiteFooter,
   SiteHeader,
   SiteVisitBand,
   WasteControlPanel,
   assetHref,
+  facilityVisitHref,
   routeHref,
   siteVisitHref,
   whatsappHref,
@@ -84,7 +87,7 @@ function ServiceHero({ type }: { type: ServiceKey }) {
         <span className="eyebrow"><i /> {data.kicker}</span>
         <h1>{data.title}</h1>
         <p>{data.intro}</p>
-        <div className="service-hero-actions"><ActionLink href={whatsappHref}>Chat with REE</ActionLink><ActionLink href={siteVisitHref} light>Book a free site visit</ActionLink></div>
+        <div className="service-hero-actions"><ActionLink href={whatsappHref}>Chat with REE</ActionLink><ActionLink href={siteVisitHref} light>Free site visit at your business</ActionLink></div>
         <div className="service-proof-line">{data.proof.map((item, index) => <span key={item}><i>0{index + 1}</i>{item}</span>)}</div>
       </div>
       <div className="service-hero-code">REE / {type.toUpperCase()} / UAE</div>
@@ -121,14 +124,11 @@ function RecyclingPage() {
         </div>
       </section>
       <IndependenceBlock compact />
+      <MaterialPathways />
       <WasteControlPanel current="recycling" />
       <section className="material-section section-pad">
         <div><span className="section-index">MATERIALS</span><p className="kicker">Start with what can work at your site</p><h2>Practical streams.<br />Clear destinations.</h2><p>Not every material belongs in every programme. The free site visit identifies which streams are clean enough, valuable enough and operationally realistic for your location.</p><ActionLink href={siteVisitHref}>Assess my site</ActionLink></div>
         <div className="material-grid">{materials.map((item,index)=><span key={item}><i>{String(index+1).padStart(2,"0")}</i>{item}</span>)}<span className="future"><i>SOON</i>Food & textiles<small>route development in progress</small></span></div>
-      </section>
-      <section className="comparison-section section-pad">
-        <span className="section-index">THE DIFFERENCE</span><h2>Waste removal tells you what left.<br /><em>REE tells you what happened.</em></h2>
-        <div className="comparison-table"><div><b>CAPABILITY</b><b>STANDARD COLLECTION</b><b>REE RECYCLING</b></div>{["Site bin setup", "Clear labels and stream planning", "Physical sorting", "Each stream weighed and documented", "Material destination tracking", "Dashboard and ESG-ready data", "Rebates", "Local recycled-product fabrication"].map(item=><div key={item}><span>{item}</span><i>—</i><strong>Included</strong></div>)}</div>
       </section>
       <FaqSection type="recycling" />
       <SiteVisitBand current="recycling" title="See which streams are worth collecting at your site." />
@@ -154,7 +154,10 @@ function ConsultingPage() {
   ];
   return (
     <><SiteHeader current="consulting" /><main><ServiceHero type="consulting" />
-      <ClientStrip current="consulting" compact />
+      <section className="consulting-problems section-pad">
+        <div className="section-heading"><span className="section-index">THE VISIBILITY GAP</span><div><p className="kicker">Most businesses are flying blind</p><h2>You cannot reduce<br />what no one has checked.</h2><p>Invoices, contractor totals and ESG worksheets can all be internally consistent while missing what is physically inside the bags. We start with the decision the business needs to make, then find the evidence required to make it.</p></div></div>
+        <div className="problem-solution-grid">{problems.map(([problem,answer],index)=><article key={problem}><span>0{index+1}</span><h3>{problem}</h3><p>{answer}</p></article>)}</div>
+      </section>
       <section className="consulting-truth section-pad">
         <div><span className="section-index">NOT A DESK EXERCISE</span><p className="kicker">The bags are part of the brief</p><h2>We do not study waste from a cosy office.</h2></div>
         <div><p>REE was built inside UAE recycling and material recovery. We know why material gets rejected, how contamination appears, what buyers will accept and what the collection route can realistically deliver.</p><blockquote>That means the recommendation survives contact with the waste room.</blockquote></div>
@@ -163,20 +166,18 @@ function ConsultingPage() {
         <div className="audit-storyboard-photo"><img src={assetHref("consulting-field-audit-v1.webp","consulting")} alt="REE consultants opening, sorting and weighing waste during a site audit" /><div className="audit-marker marker-open"><b>01 / OPEN</b><span>See the real composition</span></div><div className="audit-marker marker-sort"><b>02 / SORT</b><span>Separate material streams</span></div><div className="audit-marker marker-weigh"><b>03 / WEIGH</b><span>Build the baseline</span></div><div className="audit-marker marker-decide"><b>04 / DECIDE</b><span>Prioritise the action</span></div></div>
         <div className="audit-storyboard-caption"><span>FIELD NOTE / THE REPORT STARTS HERE</span><p>Invoices tell us what was charged. Contractor reports tell us what was recorded. Opening the bags shows what can actually be reduced, recovered or redesigned.</p></div>
       </section>
-      <section className="consulting-problems section-pad">
-        <div className="section-heading"><span className="section-index">PROBLEM → DECISION</span><div><p className="kicker">Start with the commercial problem</p><h2>Evidence before<br />recommendation.</h2></div></div>
-        <div className="problem-solution-grid">{problems.map(([problem,answer],index)=><article key={problem}><span>0{index+1}</span><h3>{problem}</h3><p>{answer}</p></article>)}</div>
-      </section>
       <section className="process-section section-pad">
-        <div><span className="section-index">HOW AN ENGAGEMENT WORKS</span><p className="kicker">One route from uncertainty to control</p><h2>Brief. Diagnose.<br />Scope. Deliver. Act.</h2><p>A REE engagement can start with one question or one site. The work expands only when the evidence justifies it.</p></div>
+        <div><span className="section-index">A PRACTICAL ROUTE</span><p className="kicker">Evidence before recommendation</p><h2>Brief. Diagnose.<br />Scope. Deliver. Act.</h2><p>A REE engagement can start with one question or one site. The work expands only when the evidence justifies it, and the result names owners, timing and the next operating move.</p></div>
         <div className="process-list">{process.map(([number,title,copy])=><article key={number}><span>{number}</span><h3>{title}</h3><p>{copy}</p></article>)}</div>
       </section>
-      <IndependenceBlock />
-      <section className="audience-section section-pad"><span className="section-index">WHERE WE WORK</span><h2>Built for operations<br />that generate real volume.</h2><div>{["Developers & master communities","Business parks & offices","Warehouses & logistics","Retail & hospitality","Events & venues","Education","Industrial operations","Government","ESG & Sustainability teams","FM & property management"].map(item=><span key={item}>{item}</span>)}</div></section>
+      <ClientStrip current="consulting" compact />
       <section className="case-detail-band section-pad">
-        <div><span className="section-index">CASE / TASTE OF DUBAI</span><h2>19,679 kg reported.<br /><em>523 kg verified.</em></h2></div>
+        <div><span className="section-index">REAL WASTE. REAL NUMBERS. / TASTE OF DUBAI</span><h2>19,679 kg reported.<br /><em>523 kg verified.</em></h2></div>
         <div><p>The waste operator’s report showed 19,679 kg. REE’s physical audit found 523 kg in the audited scope. The gap changed the conversation from “how much was collected?” to “what can the business actually prove?”</p><dl><div><dt>Challenge</dt><dd>Reported waste volume could not be reconciled with the event operation.</dd></div><div><dt>Method</dt><dd>Physical bag opening, sorting and weighing by material stream.</dd></div><div><dt>Decision</dt><dd>Use verified material data as the baseline for future reduction and reporting.</dd></div></dl><small>CASE NOTE: audited scope, reporting period and final client-approved wording to be confirmed before production publication.</small></div>
       </section>
+      <SiteVisitBand current="consulting" title="Put the first decision on evidence, not assumptions." />
+      <IndependenceBlock />
+      <section className="audience-section section-pad"><span className="section-index">OPERATIONAL FIT</span><h2>Built for sites where<br />waste meets real operations.</h2><div>{["Developers & master communities","Business parks & offices","Warehouses & logistics","Retail & hospitality","Events & venues","Education","Industrial operations","Government","ESG & Sustainability teams","FM & property management"].map(item=><span key={item}>{item}</span>)}</div></section>
       <FaqSection type="consulting" />
       <SiteVisitBand current="consulting" title="The fastest audit starts with a walk through the site." />
     </main><SiteFooter current="consulting" /></>
@@ -185,6 +186,7 @@ function ConsultingPage() {
 
 function ProductsPage() {
   const [catalogueOpen, setCatalogueOpen] = useState(false);
+  const catalogueName = useRef<HTMLInputElement>(null);
   const portfolio = [
     ["real/01-jumeirah_furniture_s.jpeg", "Jumeirah Eco Village", "Furniture set", "Recycled-plastic seating and table for Al Qasr Hotel."],
     ["real/02-arabian_warrior_meda.jpg", "Arabian Warrior", "Event medals", "A circular alternative to conventional race merchandise."],
@@ -198,6 +200,9 @@ function ProductsPage() {
     window.open(`${whatsappHref}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
     setCatalogueOpen(false);
   };
+  useEffect(() => {
+    if (catalogueOpen) catalogueName.current?.focus();
+  }, [catalogueOpen]);
   return (
     <><SiteHeader current="products" /><main><ServiceHero type="products" />
       <ClientStrip current="products" compact />
@@ -217,12 +222,12 @@ function ProductsPage() {
       <section className="product-routes section-pad"><span className="section-index">THREE WAYS TO START</span><div>
         <article><div className="product-route-media" style={{backgroundImage:`url('${assetHref("circular-products-v3.png","products")}')`}}/><span>01 / READY FORMATS</span><h3>Midori catalogue</h3><p>Choose from existing furniture, gift and award formats, then adapt the colour and branding.</p><button type="button" onClick={() => setCatalogueOpen(true)}>Download the catalogue <Arrow /></button></article>
         <article><div className="product-route-media" style={{backgroundImage:`url('${assetHref("workshop-restored-v3.png","products")}')`}}/><span>02 / TEAM EXPERIENCE</span><h3>DIY workshop</h3><p>Let your team follow the material through sorting, processing and making a finished object.</p><a href={routeHref("workshops","products")}>Explore workshops <Arrow /></a></article>
-        <article><div className="product-route-media" style={{backgroundImage:`url('${assetHref("real/01-jumeirah_furniture_s.jpeg","products")}')`}}/><span>03 / BESPOKE</span><h3>Custom fabrication</h3><p>Build a product around your brief, audience or a suitable stream of your own recovered plastic.</p><a href={`${whatsappHref}?text=${encodeURIComponent("Hi REE, I would like to discuss a custom recycled-plastic product.")}`} target="_blank" rel="noreferrer">Send a brief <Arrow /></a></article>
+        <article><div className="product-route-media" style={{backgroundImage:`url('${assetHref("real/01-jumeirah_furniture_s.jpeg","products")}')`}}/><span>03 / BESPOKE</span><h3>Custom fabrication</h3><p>Build a product around your brief, audience or a suitable stream of your own recovered plastic.</p><a href={`${whatsappHref}?text=${encodeURIComponent("Hi REE, I would like to discuss a custom recycled-plastic product.")}`} target="_blank" rel="noreferrer" aria-label="Send a custom fabrication brief to REE on WhatsApp; opens in a new tab">Send a brief <Arrow /></a></article>
       </div></section>
       <CredibilityBlock current="products" />
       <FaqSection type="products" />
       <section className="product-final section-pad"><span className="section-index">SEND THE BRIEF</span><h2>A sketch, a reference<br />or one rough idea is enough.</h2><p>We will tell you what is feasible, which material and process fit, and what will drive timing and budget.</p><ActionLink href={`${whatsappHref}?text=${encodeURIComponent("Hi REE, I have an idea for a circular product.")}`}>Send your idea</ActionLink></section>
-      {catalogueOpen && <div className="catalogue-modal" role="presentation" onMouseDown={() => setCatalogueOpen(false)}><section className="catalogue-panel" role="dialog" aria-modal="true" aria-labelledby="catalogue-title" onMouseDown={(event) => event.stopPropagation()}><button className="catalogue-close" type="button" onClick={() => setCatalogueOpen(false)} aria-label="Close catalogue form">×</button><span className="section-index">MIDORI / PRODUCT CATALOGUE</span><h2 id="catalogue-title">Where should we send it?</h2><p>Leave your details and the REE team will send the latest catalogue to your work email.</p><form onSubmit={requestCatalogue}><label>Name<input name="name" autoComplete="name" required /></label><label>Work email<input name="email" type="email" autoComplete="email" required /></label><label>Company <small>optional</small><input name="company" autoComplete="organization" /></label><button type="submit">Request the catalogue <Arrow /></button><small>Submitting opens a pre-filled WhatsApp request so the team can send the current PDF.</small></form></section></div>}
+      {catalogueOpen && <div className="catalogue-modal" role="presentation" onMouseDown={() => setCatalogueOpen(false)} onKeyDown={(event) => { if (event.key === "Escape") setCatalogueOpen(false); }}><section className="catalogue-panel" role="dialog" aria-modal="true" aria-labelledby="catalogue-title" aria-describedby="catalogue-description" onMouseDown={(event) => event.stopPropagation()}><button className="catalogue-close" type="button" onClick={() => setCatalogueOpen(false)} aria-label="Close catalogue form">×</button><span className="section-index">MIDORI / PRODUCT CATALOGUE</span><h2 id="catalogue-title">Where should we send it?</h2><p id="catalogue-description">Leave your details and the REE team will send the latest catalogue to your work email.</p><form onSubmit={requestCatalogue}><label>Name<input ref={catalogueName} name="name" autoComplete="name" required /></label><label>Work email<input name="email" type="email" autoComplete="email" required /></label><label>Company <small>optional</small><input name="company" autoComplete="organization" /></label><button type="submit">Request the catalogue <Arrow /></button><small>Submitting opens a pre-filled WhatsApp request so the team can send the current PDF.</small></form></section></div>}
     </main><SiteFooter current="products" /></>
   );
 }
@@ -239,9 +244,10 @@ export function AboutPage() {
   ];
   return (
     <><SiteHeader current="about" /><main>
-      <section className="about-hero"><div><span className="eyebrow"><i /> ABOUT REE / UAE</span><h1>We work in the second-oldest profession.<br /><em>Waste.</em></h1><p>And in one of the most misunderstood industries in the UAE. REE exists to give businesses a clearer view of what they throw away — and a practical route to less.</p><div><ActionLink href={siteVisitHref}>Visit our facility</ActionLink><ActionLink href={whatsappHref} light>Chat with REE</ActionLink></div></div></section>
+      <section className="about-hero"><div><span className="eyebrow"><i /> ABOUT REE / UAE</span><h1>We work in the second-oldest profession.<br /><em>Waste.</em></h1><p>And in one of the most misunderstood industries in the UAE. REE exists to give businesses a clearer view of what they throw away — and a practical route to less.</p><div><ActionLink href={siteVisitHref}>Free site visit at your business</ActionLink><ActionLink href={whatsappHref} light>Chat with REE</ActionLink></div></div></section>
       <ClientStrip current="about" compact />
       <section className="founder-story section-pad"><div><span className="section-index">WHY REE EXISTS</span><p className="kicker">The missing information is inside the bags</p><h2>Companies pay for waste management without knowing what they get.</h2></div><div><p>They receive weights without composition, destinations without proof and reports that rarely help the operation improve. REE was built to close that gap.</p><p>We combine physical waste work, operating design and usable data. The goal is not “more recycling activity”. The goal is less waste — with enough evidence to show how it happened.</p></div></section>
+      <IdentityBlock />
       <section className="about-operations-mosaic section-pad" aria-label="REE operations in Dubai">
         <figure className="operations-main"><img src={assetHref("operations-facility-v1.webp","about")} alt="REE operations team sorting material and making recycled-plastic products in Dubai" /><figcaption><b>THE OPERATION</b><span>One team connects sorting, evidence and fabrication.</span></figcaption></figure>
         <figure><img src={assetHref("consulting-audit-v3.png","about")} alt="REE team carrying out a physical waste audit" /><figcaption><b>SORT + MEASURE</b><span>Answers start at the material level.</span></figcaption></figure>
@@ -249,9 +255,9 @@ export function AboutPage() {
       </section>
       <section className="belief-grid section-pad">{[["01","Waste is often misreported","When one chain owns the truck, facility and disposal route, there is little incentive to inspect the number."],["02","Waste is an asset","A bottle can still contain material value, product value and proof of environmental progress."],["03","You cannot change what you cannot see","Good data creates the feedback loop that changes procurement, operations and behaviour."]].map(([n,t,c])=><article key={n}><span>{n}</span><h3>{t}</h3><p>{c}</p></article>)}</section>
       <section className="team-section section-pad"><div><span className="section-index">THE TEAM</span><p className="kicker">Operators, makers and waste people</p><h2>The work is physical.<br />So is the expertise.</h2></div><div className="team-list">{team.map(([name,role],i)=><article key={name}><span>0{i+1}</span><h3>{name}</h3><p>{role}</p></article>)}</div></section>
-      <section className="facility-section section-pad"><div className="facility-image" style={{backgroundImage:`url('${assetHref("operations-facility-v1.webp","about")}')`}}/><div><span className="section-index">RAS AL KHOR INDUSTRIAL ESTATE / DUBAI</span><p className="kicker">The facility is part of the method</p><h2>See the sorting, the data and the products in one visit.</h2><p>Every bag we audit comes here. Materials are opened, separated and weighed. Selected plastics move into the fabrication process. The Waste Control Panel turns the operating record into a view the client can use.</p><blockquote>Thirty minutes at our facility will show you more about your waste than ten years of reports.</blockquote><ActionLink href={siteVisitHref}>Book a free facility visit</ActionLink></div></section>
+      <section className="facility-section section-pad"><div className="facility-image" style={{backgroundImage:`url('${assetHref("operations-facility-v1.webp","about")}')`}}/><div><span className="section-index">RAS AL KHOR INDUSTRIAL ESTATE / DUBAI</span><p className="kicker">The facility is part of the method</p><h2>See the sorting, the data and the products in one visit.</h2><p>Every bag we audit comes here. Materials are opened, separated and weighed. Selected plastics move into the fabrication process. The Waste Control Panel turns the operating record into a view the client can use.</p><blockquote>Thirty minutes at our facility will show you more about your waste than ten years of reports.</blockquote><ActionLink href={facilityVisitHref}>Ask about a facility tour</ActionLink></div></section>
       <section className="about-framework section-pad"><div><span className="section-index">THE REE FRAMEWORK</span><h2>Diagnose.<br />Action.<br />Control.</h2></div><div><p>Diagnosis gives action a reason. Action gives control something to measure. Control feeds the next diagnosis. Remove one and the waste-reduction loop breaks.</p><div>{[["01","DIAGNOSE","Open every stream and find the real baseline."],["02","ACTION","Build the route, bins, recovery and behaviour change."],["03","CONTROL","Track the result and correct the operation."]].map(([n,t,c])=><article key={n}><span>{n}</span><h3>{t}</h3><p>{c}</p></article>)}</div></div></section>
-      <SiteVisitBand current="about" title="Come and see what happens after the bag leaves your site." />
+      <SiteVisitBand current="about" title="Start with a walk through your own operation." />
     </main><SiteFooter current="about" /></>
   );
 }
