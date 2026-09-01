@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import DacPhysics from "./DacPhysics";
+import OutcomeFlow from "./OutcomeFlow";
 import RadarMachine from "./RadarMachine";
 import { CredibilityBlock, IdentityBlock, IndependenceBlock, SiteFooter, WasteControlPanel, routeHref, siteVisitHref, whatsappHref } from "./MarketingBlocks";
 
@@ -173,27 +174,11 @@ export default function Home() {
       <section className="manifesto section-pad" id="outcome">
         <div className="section-index">01 / THE OUTCOME</div>
         <div className="manifesto-copy">
-          <p className="kicker">Waste is only the input</p>
-          <h2>One stream.<br /><span>Four returns.</span></h2>
-          <p className="manifesto-body">We make the chain visible: what left the site, what material was recovered, what value came back, and which metrics can be used in ESG and sustainability reporting.</p>
+          <p className="kicker">Waste reduction is a system</p>
+          <h2>One stream.<br /><span>Designed better.</span></h2>
+          <p className="manifesto-body">REE turns one mixed waste stream into a managed system: diagnose it, give recoverable materials the right routes, and keep the result visible.</p>
         </div>
-        <div className="outcome-system" aria-label="Waste to materials to value to data">
-          <div className="outcome-head"><span>REE MATERIAL LEDGER</span><b>LIVE ROUTE / UAE</b></div>
-          {[
-            ["01", "Waste", "Measure what leaves", "waste"],
-            ["02", "Data", "Make the baseline visible", "data"],
-            ["03", "Materials", "Recover what still has value", "materials"],
-            ["04", "Value", "Return products, rebates and proof", "value"],
-          ].map(([number, title, copy, image]) => (
-            <div className="outcome-step" key={number}>
-              <span className="outcome-number">{number}</span>
-              <div className={`outcome-thumb thumb-${image}`} />
-              <div><strong>{title}</strong><small>{copy}</small></div>
-              <i className="outcome-node" />
-            </div>
-          ))}
-          <div className="outcome-result"><span>ULTIMATE OUTCOME</span><strong>LESS WASTE</strong><i>↓</i></div>
-        </div>
+        <OutcomeFlow />
       </section>
 
       <IdentityBlock />
