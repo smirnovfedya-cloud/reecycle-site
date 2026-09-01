@@ -1,6 +1,8 @@
 "use client";
 
 import { FormEvent, useEffect, useRef, useState } from "react";
+import FrameworkInteractive from "./FrameworkInteractive";
+import SortGame from "./SortGame";
 
 import {
   ActionLink,
@@ -130,6 +132,7 @@ function RecyclingPage() {
         <div><span className="section-index">MATERIALS</span><p className="kicker">Start with what can work at your site</p><h2>Practical streams.<br />Clear destinations.</h2><p>Not every material belongs in every programme. The free site visit identifies which streams are clean enough, valuable enough and operationally realistic for your location.</p><ActionLink href={siteVisitHref}>Assess my site</ActionLink></div>
         <div className="material-grid">{materials.map((item,index)=><span key={item}><i>{String(index+1).padStart(2,"0")}</i>{item}</span>)}<span className="future"><i>SOON</i>Food & textiles<small>route development in progress</small></span></div>
       </section>
+      <SortGame />
       <FaqSection type="recycling" />
       <SiteVisitBand current="recycling" title="See which streams are worth collecting at your site." />
     </main><SiteFooter current="recycling" /></>
@@ -170,6 +173,7 @@ function ConsultingPage() {
         <div><span className="section-index">A PRACTICAL ROUTE</span><p className="kicker">Evidence before recommendation</p><h2>Brief. Diagnose.<br />Scope. Deliver. Act.</h2><p>A REE engagement can start with one question or one site. The work expands only when the evidence justifies it, and the result names owners, timing and the next operating move.</p></div>
         <div className="process-list">{process.map(([number,title,copy])=><article key={number}><span>{number}</span><h3>{title}</h3><p>{copy}</p></article>)}</div>
       </section>
+      <FrameworkInteractive />
       <ClientStrip current="consulting" compact />
       <section className="case-detail-band section-pad">
         <div><span className="section-index">REAL WASTE. REAL NUMBERS. / TASTE OF DUBAI</span><h2>19,679 kg reported.<br /><em>523 kg verified.</em></h2></div>

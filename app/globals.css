@@ -6,6 +6,29 @@
   font-display: swap;
 }
 
+/* Positioning-led, shorter home. */
+.hero-positioning .hero-content{width:min(840px,72vw)}
+.hero-positioning-copy{max-width:780px;color:rgba(255,255,255,.82);font-size:clamp(18px,1.55vw,25px);line-height:1.6}
+.manifesto-how{min-height:940px}
+.home-method-steps{display:grid;grid-template-columns:1fr;gap:0;margin-top:34px;border-top:1px solid var(--line-light)}
+.home-method-steps>span{display:flex;flex-direction:column;gap:6px;padding:13px 0;border-bottom:1px solid var(--line-light);color:rgba(255,255,255,.58);font-size:12px}
+.home-method-steps b{color:var(--orange);font:650 6px "REE Mono",monospace;letter-spacing:.1em}
+.route-grid.route-grid-four{grid-template-columns:repeat(2,1fr)}
+.wcp-section.is-compact{padding-top:90px;padding-bottom:90px;grid-template-columns:.8fr 1.2fr}
+.wcp-section.is-compact .wcp-feature-list{display:none}
+.wcp-section.is-compact .wcp-product-shell{min-height:500px}
+.wcp-section.is-compact .wcp-copy>p:not(.kicker){margin-bottom:24px}
+
+@media(max-width:760px){
+  .hero-positioning .hero-content{width:100%;padding-right:20px}
+  .hero-positioning-copy{font-size:18px;line-height:1.72}
+  .manifesto-how{min-height:0}
+  .home-method-steps{margin-bottom:28px}
+  .route-grid.route-grid-four{grid-template-columns:1fr}
+  .wcp-section.is-compact{grid-template-columns:1fr;padding-top:70px;padding-bottom:70px}
+  .wcp-section.is-compact .wcp-product-shell{min-height:0}
+}
+
 @font-face {
   font-family: "REE Mono";
   src: url("./fonts/ree-mono.woff2") format("woff2");

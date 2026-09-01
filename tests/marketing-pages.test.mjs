@@ -44,6 +44,10 @@ test("commercial priorities are present and the calculator stays archived", asyn
   ]);
   assert.match(home, /The Waste/);
   assert.match(home, /Reduction Company/);
+  assert.match(home, /We help businesses reduce waste and recover value from what remains/);
+  assert.match(home, /Diagnose/);
+  assert.match(home, /Build\. Measure/);
+  assert.match(home, /Hands-on workshops/);
   assert.match(home, /Chat with REE/);
   assert.match(blocks, /Book a free site visit/);
   assert.match(blocks, /Waste Control Panel/);
@@ -57,6 +61,10 @@ test("commercial priorities are present and the calculator stays archived", asyn
   assert.match(workshops, /One ordinary outlet/);
   assert.match(workshops, /Can we use plastic collected in our own office/);
   assert.doesNotMatch(home, /ArchivedImpactCalculator|ImpactCalculator/);
+  assert.doesNotMatch(home, /Where does it/);
+  assert.doesNotMatch(home, /DacPhysics|FrameworkInteractive/);
+  assert.match(pages, /SortGame/);
+  assert.match(pages, /FrameworkInteractive/);
 });
 
 test("consulting content follows the approved credibility sequence", async () => {

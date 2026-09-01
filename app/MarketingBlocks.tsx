@@ -191,7 +191,7 @@ export function MaterialPathways() {
   );
 }
 
-export function WasteControlPanel({ current = "" }: { current?: RouteKey }) {
+export function WasteControlPanel({ current = "", compact = false }: { current?: RouteKey; compact?: boolean }) {
   const [activeView, setActiveView] = useState<"stats" | "impact" | "map">("stats");
   const materialRows = [
     ["Plastic", "1,246 kg", "72%"],
@@ -201,11 +201,11 @@ export function WasteControlPanel({ current = "" }: { current?: RouteKey }) {
   ];
 
   return (
-    <section className="wcp-section section-pad" id="control-panel">
+    <section className={`wcp-section section-pad${compact ? " is-compact" : ""}`} id="control-panel">
       <div className="wcp-copy">
         <span className="section-index">CONTROL / WASTE CONTROL PANEL</span>
         <p className="kicker">Your waste operation, in one view</p>
-        <h2>From every collection to one usable record.</h2>
+        <h2>{compact ? "One control layer. Every material record." : "From every collection to one usable record."}</h2>
         <p>Waste data normally arrives as operator PDFs, invoices and site spreadsheets that do not agree. The Waste Control Panel connects what was collected, where it came from, what it contained and the impact it created.</p>
         <div className="wcp-feature-list">
           <article><span>01</span><div><b>Stats</b><p>Recyclable, compostable and general waste — broken down by material, site and collection.</p></div></article>
@@ -315,10 +315,10 @@ export function CredibilityBlock({ current = "" }: { current?: RouteKey }) {
       </div>
       <div className="credibility-copy">
         <span className="section-index">THE PEOPLE BEHIND THE DATA</span>
-        <p className="kicker">Built inside the waste industry</p>
-        <h2>We sort, weigh and make — in our own Dubai facility.</h2>
-        <p>REE’s team brings hands-on experience across B2B and B2C recycling, material recovery, collection operations and product fabrication. Every bag we audit comes through a real operating team, not a remote reporting layer.</p>
-        <div className="credibility-facts"><span><b>UAE</b> Dubai + Abu Dhabi operations</span><span><b>Live</b> Waste Control Panel</span><span><b>In-house</b> sorting & fabrication</span></div>
+        <p className="kicker">Independent enough to check. Practical enough to act.</p>
+        <h2>We open the bags — then stay to change the result.</h2>
+        <p>REE does not own a landfill and does not profit from waste volume growing. Our team combines physical sorting, operating design, recovery routes and usable data from its own Dubai facility.</p>
+        <div className="credibility-facts"><span><b>Independent</b> no landfill incentive</span><span><b>Physical</b> sorting & weighing</span><span><b>Accountable</b> action + control</span></div>
         <ActionLink href={routeHref("about", current)}>Meet REE</ActionLink>
       </div>
     </section>
