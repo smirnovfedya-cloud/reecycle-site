@@ -10,6 +10,10 @@ const routes = [
   ["static-site/products/index.html", "https://reecycle.app/products/"],
   ["static-site/workshops/index.html", "https://reecycle.app/workshops/"],
   ["static-site/about/index.html", "https://reecycle.app/about/"],
+  ["static-site/industries/events/index.html", "https://reecycle.app/industries/events/"],
+  ["static-site/industries/holding-companies/index.html", "https://reecycle.app/industries/holding-companies/"],
+  ["static-site/industries/hospitality/index.html", "https://reecycle.app/industries/hospitality/"],
+  ["static-site/industries/banks/index.html", "https://reecycle.app/industries/banks/"],
 ];
 
 test("every marketing route has a complete SEO head", async () => {
@@ -44,6 +48,9 @@ test("commercial priorities are present and the calculator stays archived", asyn
   ]);
   assert.match(home, /The Waste/);
   assert.match(home, /Reduction Company/);
+  assert.match(home, /IndustrySelector/);
+  assert.match(home, /IndustryExperience/);
+  assert.match(home, /Hands-on workshops/);
   assert.match(home, /Chat with REE/);
   assert.match(blocks, /Book a free site visit/);
   assert.match(blocks, /Waste Control Panel/);
@@ -57,6 +64,24 @@ test("commercial priorities are present and the calculator stays archived", asyn
   assert.match(workshops, /One ordinary outlet/);
   assert.match(workshops, /Can we use plastic collected in our own office/);
   assert.doesNotMatch(home, /ArchivedImpactCalculator|ImpactCalculator/);
+  assert.doesNotMatch(home, /Where does it/);
+  assert.doesNotMatch(home, /DacPhysics|FrameworkInteractive/);
+  assert.match(pages, /SortGame/);
+  assert.match(pages, /FrameworkInteractive/);
+});
+
+test("industry pages share one content model and include a not-found route", async () => {
+  const [content, experience, footer] = await Promise.all([
+    readFile(new URL("app/IndustryContent.ts", root), "utf8"),
+    readFile(new URL("app/IndustryExperience.tsx", root), "utf8"),
+    readFile(new URL("app/MarketingBlocks.tsx", root), "utf8"),
+  ]);
+  for (const slug of ["events", "holding-companies", "hospitality", "banks"]) {
+    assert.match(content, new RegExp(`(?:slug: )?"${slug}"`));
+    assert.match(footer, new RegExp(`industries/${slug}`));
+  }
+  assert.match(experience, /NOT SEEING YOUR INDUSTRY/);
+  assert.match(experience, /Open the industry page/);
 });
 
 test("consulting content follows the approved credibility sequence", async () => {

@@ -7,19 +7,24 @@ export const whatsappHref = `https://wa.me/${whatsappNumber}`;
 export const siteVisitHref = `${whatsappHref}?text=${encodeURIComponent("Hi REE, I would like to book a free site visit at my business location.")}`;
 export const facilityVisitHref = `${whatsappHref}?text=${encodeURIComponent("Hi REE, I would like to ask about visiting the REE facility.")}`;
 
-export type RouteKey = "" | "recycling" | "consulting" | "products" | "workshops" | "about";
+export type RouteKey = "" | "recycling" | "consulting" | "products" | "workshops" | "about" | "industries/events" | "industries/holding-companies" | "industries/hospitality" | "industries/banks";
+
+function routePrefix(current: RouteKey = "") {
+  return current ? "../".repeat(current.split("/").length) : "";
+}
 
 export function routeHref(route: RouteKey, current: RouteKey = "") {
-  if (!route) return current ? "../" : "./";
-  return current ? `../${route}/` : `${route}/`;
+  const prefix = routePrefix(current);
+  if (!route) return prefix || "./";
+  return `${prefix}${route}/`;
 }
 
 export function homeAnchor(anchor: string, current: RouteKey = "") {
-  return `${current ? "../" : ""}#${anchor}`;
+  return `${routePrefix(current)}#${anchor}`;
 }
 
 export function assetHref(path: string, current: RouteKey = "") {
-  return `${current ? "../" : ""}assets/${path}`;
+  return `${routePrefix(current)}assets/${path}`;
 }
 
 export function Arrow() {
@@ -191,7 +196,7 @@ export function MaterialPathways() {
   );
 }
 
-export function WasteControlPanel({ current = "" }: { current?: RouteKey }) {
+export function WasteControlPanel({ current = "", compact = false }: { current?: RouteKey; compact?: boolean }) {
   const [activeView, setActiveView] = useState<"stats" | "impact" | "map">("stats");
   const materialRows = [
     ["Plastic", "1,246 kg", "72%"],
@@ -201,11 +206,11 @@ export function WasteControlPanel({ current = "" }: { current?: RouteKey }) {
   ];
 
   return (
-    <section className="wcp-section section-pad" id="control-panel">
+    <section className={`wcp-section section-pad${compact ? " is-compact" : ""}`} id="control-panel">
       <div className="wcp-copy">
         <span className="section-index">CONTROL / WASTE CONTROL PANEL</span>
         <p className="kicker">Your waste operation, in one view</p>
-        <h2>From every collection to one usable record.</h2>
+        <h2>{compact ? "One control layer. Every material record." : "From every collection to one usable record."}</h2>
         <p>Waste data normally arrives as operator PDFs, invoices and site spreadsheets that do not agree. The Waste Control Panel connects what was collected, where it came from, what it contained and the impact it created.</p>
         <div className="wcp-feature-list">
           <article><span>01</span><div><b>Stats</b><p>Recyclable, compostable and general waste — broken down by material, site and collection.</p></div></article>
@@ -315,10 +320,10 @@ export function CredibilityBlock({ current = "" }: { current?: RouteKey }) {
       </div>
       <div className="credibility-copy">
         <span className="section-index">THE PEOPLE BEHIND THE DATA</span>
-        <p className="kicker">Built inside the waste industry</p>
-        <h2>We sort, weigh and make — in our own Dubai facility.</h2>
-        <p>REE’s team brings hands-on experience across B2B and B2C recycling, material recovery, collection operations and product fabrication. Every bag we audit comes through a real operating team, not a remote reporting layer.</p>
-        <div className="credibility-facts"><span><b>UAE</b> Dubai + Abu Dhabi operations</span><span><b>Live</b> Waste Control Panel</span><span><b>In-house</b> sorting & fabrication</span></div>
+        <p className="kicker">Independent enough to check. Practical enough to act.</p>
+        <h2>We open the bags — then stay to change the result.</h2>
+        <p>REE does not own a landfill and does not profit from waste volume growing. Our team combines physical sorting, operating design, recovery routes and usable data from its own Dubai facility.</p>
+        <div className="credibility-facts"><span><b>Independent</b> no landfill incentive</span><span><b>Physical</b> sorting & weighing</span><span><b>Accountable</b> action + control</span></div>
         <ActionLink href={routeHref("about", current)}>Meet REE</ActionLink>
       </div>
     </section>
@@ -331,6 +336,7 @@ export function SiteFooter({ current = "" }: { current?: RouteKey }) {
       <footer className="site-footer">
         <a href={routeHref("", current)} className="site-footer-brand"><img src={assetHref("ree-logo.svg", current)} alt="REE" /><span>The Waste Reduction Company</span></a>
         <div><span>EXPLORE</span><a href={routeHref("recycling", current)}>Recycling & reporting</a><a href={routeHref("consulting", current)}>Waste reduction consulting</a><a href={routeHref("products", current)}>Circular products</a><a href={routeHref("workshops", current)}>Hands-on workshops</a><a href={routeHref("about", current)}>About REE</a></div>
+        <div className="site-footer-industries"><span>INDUSTRIES</span><a href={routeHref("industries/events", current)}>Events</a><a href={routeHref("industries/holding-companies", current)}>Holding companies</a><a href={routeHref("industries/hospitality", current)}>Hospitality</a><a href={routeHref("industries/banks", current)}>Banks</a></div>
         <div><span>CONTACT</span><a href={whatsappHref} target="_blank" rel="noreferrer">+971 52 851 8783</a><a href="mailto:jaskaran@reecycle.app">jaskaran@reecycle.app</a><p>Dubai & Abu Dhabi, UAE</p></div>
         <div className="site-footer-cta"><span>YOUR FIRST STEP / AT YOUR BUSINESS</span><ActionLink href={siteVisitHref}>Book a free site visit</ActionLink></div>
         <small>© {new Date().getFullYear()} REE Waste Collection and Treatment</small>

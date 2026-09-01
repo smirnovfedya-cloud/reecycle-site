@@ -1,6 +1,8 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import Home from "../app/page";
+import IndustryPage from "../app/IndustryPage";
+import { isIndustrySlug } from "../app/IndustryContent";
 import { AboutPage, ServicePage } from "../app/ServicePages";
 import WorkshopsPage from "../app/WorkshopsPage";
 import "../app/globals.css";
@@ -9,6 +11,7 @@ const segments = window.location.pathname.replace(/\/+$/, "").split("/").filter(
 const route = segments.at(-1) === "index.html" ? segments.at(-2) || "home" : segments.at(-1) || "home";
 
 function CurrentPage() {
+  if (isIndustrySlug(route)) return <IndustryPage slug={route} />;
   if (route === "recycling" || route === "consulting" || route === "products") return <ServicePage type={route} />;
   if (route === "workshops") return <WorkshopsPage />;
   if (route === "about") return <AboutPage />;
