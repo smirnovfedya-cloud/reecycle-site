@@ -2,7 +2,7 @@ name: Deploy REE to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main, codex/publish-pages-2d]
   workflow_dispatch:
 
 permissions:
