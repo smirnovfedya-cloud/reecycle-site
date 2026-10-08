@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import FrameworkInteractive from "./FrameworkInteractive";
 import SortGame from "./SortGame";
+import { SolutionsLibrary } from "./SolutionPages";
 
 import {
   ActionLink,
@@ -174,10 +175,11 @@ function ConsultingPage() {
         <div className="process-list">{process.map(([number,title,copy])=><article key={number}><span>{number}</span><h3>{title}</h3><p>{copy}</p></article>)}</div>
       </section>
       <FrameworkInteractive />
+      <SolutionsLibrary />
       <ClientStrip current="consulting" compact />
       <section className="case-detail-band section-pad">
         <div><span className="section-index">REAL WASTE. REAL NUMBERS. / TASTE OF DUBAI</span><h2>19,679 kg reported.<br /><em>523 kg verified.</em></h2></div>
-        <div><p>The waste operator’s report showed 19,679 kg. REE’s physical audit found 523 kg in the audited scope. The gap changed the conversation from “how much was collected?” to “what can the business actually prove?”</p><dl><div><dt>Challenge</dt><dd>Reported waste volume could not be reconciled with the event operation.</dd></div><div><dt>Method</dt><dd>Physical bag opening, sorting and weighing by material stream.</dd></div><div><dt>Decision</dt><dd>Use verified material data as the baseline for future reduction and reporting.</dd></div></dl><small>CASE NOTE: audited scope, reporting period and final client-approved wording to be confirmed before production publication.</small></div>
+        <div><p>The waste operator’s report showed 19,679 kg. REE’s physical audit found 523 kg in the audited scope. The gap changed the conversation from “how much was collected?” to “what can the business actually prove?”</p><dl><div><dt>Challenge</dt><dd>Reported waste volume could not be reconciled with the event operation.</dd></div><div><dt>Method</dt><dd>Physical bag opening, sorting and weighing by material stream.</dd></div><div><dt>Decision</dt><dd>Use verified material data as the baseline for future reduction and reporting.</dd></div></dl></div>
       </section>
       <SiteVisitBand current="consulting" title="Put the first decision on evidence, not assumptions." />
       <IndependenceBlock />
@@ -217,7 +219,6 @@ function ProductsPage() {
       <section className="portfolio-section section-pad">
         <div className="portfolio-head"><span className="section-index">SELECTED WORK</span><h2>Waste with a<br />second first impression.</h2></div>
         <div className="portfolio-grid">{portfolio.map(([image,client,title,copy],index)=><article className={index===0?"wide":""} key={client}><div style={{backgroundImage:`url('${assetHref(image,"products")}')`}}/><span>{client}</span><h3>{title}</h3><p>{copy}</p></article>)}</div>
-        <p className="content-note">Additional product photography, quantities and material-origin details should be client-approved before the final portfolio launch.</p>
       </section>
       <section className="workshop-landing section-pad">
         <div className="workshop-landing-image" style={{backgroundImage:`linear-gradient(90deg,rgba(4,23,16,.1),rgba(4,23,16,.72)),url('${assetHref("workshop-restored-v3.png","products")}')`}} />
@@ -244,13 +245,21 @@ export function ServicePage({ type }: { type: ServiceKey }) {
 
 export function AboutPage() {
   const team = [
-    ["Jas", "CEO / CO-FOUNDER"], ["Fedor", "COO / CO-FOUNDER"], ["Haadi", "OPERATIONS & PRODUCT"], ["Taman", "FACILITY MANAGER"], ["Adil", "COLLECTION & SORTING"],
+    ["Jas", "CEO / CO-FOUNDER", "Leads REE’s commercial direction and turns client waste problems into programmes the operation can deliver."],
+    ["Fedor", "COO / CO-FOUNDER", "Builds the operating system behind REE — from service design and data to the way the business scales."],
+    ["Haadi", "OPERATIONS & PRODUCT", "Connects recovery routes, fabrication and product delivery across client programmes."],
+    ["Taman", "FACILITY MANAGER", "Runs the Ras Al Khor facility, where material is opened, sorted, weighed and prepared."],
+    ["Adil", "COLLECTION & SORTING", "Handles collections and material sorting — the physical record behind every reported number."],
   ];
   return (
     <><SiteHeader current="about" /><main>
       <section className="about-hero"><div><span className="eyebrow"><i /> ABOUT REE / UAE</span><h1>We work in the second-oldest profession.<br /><em>Waste.</em></h1><p>And in one of the most misunderstood industries in the UAE. REE exists to give businesses a clearer view of what they throw away — and a practical route to less.</p><div><ActionLink href={siteVisitHref}>Free site visit at your business</ActionLink><ActionLink href={whatsappHref} light>Chat with REE</ActionLink></div></div></section>
       <ClientStrip current="about" compact />
-      <section className="founder-story section-pad"><div><span className="section-index">WHY REE EXISTS</span><p className="kicker">The missing information is inside the bags</p><h2>Companies pay for waste management without knowing what they get.</h2></div><div><p>They receive weights without composition, destinations without proof and reports that rarely help the operation improve. REE was built to close that gap.</p><p>We combine physical waste work, operating design and usable data. The goal is not “more recycling activity”. The goal is less waste — with enough evidence to show how it happened.</p></div></section>
+      <section className="founder-story founder-story-human section-pad">
+        <div><span className="section-index">WHY REE EXISTS</span><p className="kicker">The missing information is inside the bags</p><h2>Companies pay for waste management without knowing what they get.</h2></div>
+        <figure><img src={assetHref("team-jas.webp","about")} alt="Jas, REE co-founder, speaking at a sustainability event" /><figcaption><span>JAS / CEO & CO-FOUNDER</span><blockquote>“No data. No transparency. No clear answers to simple questions. At some point it clicked — this should not be normal. So we built REE.”</blockquote></figcaption></figure>
+        <div className="founder-story-copy"><p>Businesses receive weights without composition, destinations without proof and reports that rarely help the operation improve. REE was built to close that gap.</p><p>We combine physical waste work, operating design and usable data. The goal is not more recycling activity. The goal is less waste — with enough evidence to show how it happened.</p></div>
+      </section>
       <IdentityBlock />
       <section className="about-operations-mosaic section-pad" aria-label="REE operations in Dubai">
         <figure className="operations-main"><img src={assetHref("operations-facility-v1.webp","about")} alt="REE operations team sorting material and making recycled-plastic products in Dubai" /><figcaption><b>THE OPERATION</b><span>One team connects sorting, evidence and fabrication.</span></figcaption></figure>
@@ -258,7 +267,7 @@ export function AboutPage() {
         <figure><img src={assetHref("circular-products-v3.png","about")} alt="Furniture made from locally recovered plastic" /><figcaption><b>MAKE + RETURN</b><span>Selected plastic comes back as a useful object.</span></figcaption></figure>
       </section>
       <section className="belief-grid section-pad">{[["01","Waste is often misreported","When one chain owns the truck, facility and disposal route, there is little incentive to inspect the number."],["02","Waste is an asset","A bottle can still contain material value, product value and proof of environmental progress."],["03","You cannot change what you cannot see","Good data creates the feedback loop that changes procurement, operations and behaviour."]].map(([n,t,c])=><article key={n}><span>{n}</span><h3>{t}</h3><p>{c}</p></article>)}</section>
-      <section className="team-section section-pad"><div><span className="section-index">THE TEAM</span><p className="kicker">Operators, makers and waste people</p><h2>The work is physical.<br />So is the expertise.</h2></div><div className="team-list">{team.map(([name,role],i)=><article key={name}><span>0{i+1}</span><h3>{name}</h3><p>{role}</p></article>)}</div></section>
+      <section className="team-section section-pad"><div><span className="section-index">THE TEAM</span><p className="kicker">Operators, makers and waste people</p><h2>The work is physical.<br />So is the expertise.</h2><p className="team-intro">The people who scope the programme stay connected to the people who collect, sort, weigh, fabricate and report the result.</p></div><div className="team-list">{team.map(([name,role,bio],i)=><article key={name}><span>0{i+1}</span><div><h3>{name}</h3><b>{role}</b></div><p>{bio}</p></article>)}</div></section>
       <section className="facility-section section-pad"><div className="facility-image" style={{backgroundImage:`url('${assetHref("operations-facility-v1.webp","about")}')`}}/><div><span className="section-index">RAS AL KHOR INDUSTRIAL ESTATE / DUBAI</span><p className="kicker">The facility is part of the method</p><h2>See the sorting, the data and the products in one visit.</h2><p>Every bag we audit comes here. Materials are opened, separated and weighed. Selected plastics move into the fabrication process. The Waste Control Panel turns the operating record into a view the client can use.</p><blockquote>Thirty minutes at our facility will show you more about your waste than ten years of reports.</blockquote><ActionLink href={facilityVisitHref}>Ask about a facility tour</ActionLink></div></section>
       <section className="about-framework section-pad"><div><span className="section-index">THE REE FRAMEWORK</span><h2>Diagnose.<br />Action.<br />Control.</h2></div><div><p>Diagnosis gives action a reason. Action gives control something to measure. Control feeds the next diagnosis. Remove one and the waste-reduction loop breaks.</p><div>{[["01","DIAGNOSE","Open every stream and find the real baseline."],["02","ACTION","Build the route, bins, recovery and behaviour change."],["03","CONTROL","Track the result and correct the operation."]].map(([n,t,c])=><article key={n}><span>{n}</span><h3>{t}</h3><p>{c}</p></article>)}</div></div></section>
       <SiteVisitBand current="about" title="Start with a walk through your own operation." />

@@ -3,6 +3,7 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 const root = new URL("../", import.meta.url);
+const solutionData = JSON.parse(await readFile(new URL("content/solutions.json", root), "utf8"));
 const routes = [
   ["static-site/index.html", "https://reecycle.app/"],
   ["static-site/recycling/index.html", "https://reecycle.app/recycling/"],
@@ -10,6 +11,7 @@ const routes = [
   ["static-site/products/index.html", "https://reecycle.app/products/"],
   ["static-site/workshops/index.html", "https://reecycle.app/workshops/"],
   ["static-site/about/index.html", "https://reecycle.app/about/"],
+  ...solutionData.map((solution) => [`static-site/${solution.slug}/index.html`, `https://reecycle.app/${solution.slug}/`]),
 ];
 
 test("every marketing route has a complete SEO head", async () => {
@@ -46,7 +48,7 @@ test("commercial priorities are present and the calculator stays archived", asyn
   assert.match(home, /Reduction Company/);
   assert.match(home, /We help businesses reduce waste and recover value from what remains/);
   assert.match(home, /Diagnose/);
-  assert.match(home, /Build\. Measure/);
+  assert.match(home, /Action\. Control/);
   assert.match(home, /Hands-on workshops/);
   assert.match(home, /Chat with REE/);
   assert.match(blocks, /Book a free site visit/);
@@ -65,6 +67,20 @@ test("commercial priorities are present and the calculator stays archived", asyn
   assert.doesNotMatch(home, /DacPhysics|FrameworkInteractive/);
   assert.match(pages, /SortGame/);
   assert.match(pages, /FrameworkInteractive/);
+  assert.match(pages, /SolutionsLibrary/);
+  assert.doesNotMatch(pages, /CASE NOTE|before production publication|before the final portfolio launch/);
+});
+
+test("the consulting library keeps every legacy SEO capability discoverable", async () => {
+  const [pages, library] = await Promise.all([
+    readFile(new URL("app/ServicePages.tsx", root), "utf8"),
+    readFile(new URL("app/SolutionPages.tsx", root), "utf8"),
+  ]);
+  assert.match(pages, /SolutionsLibrary/);
+  for (const solution of solutionData) assert.ok(library.includes(solution.slug) || library.includes("allSolutions"));
+  assert.equal(solutionData.filter((item) => item.cluster === "diagnose").length, 6);
+  assert.equal(solutionData.filter((item) => item.cluster === "action").length, 7);
+  assert.equal(solutionData.filter((item) => item.cluster === "control").length, 6);
 });
 
 test("consulting content follows the approved credibility sequence", async () => {

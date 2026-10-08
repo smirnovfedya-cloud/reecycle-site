@@ -3,6 +3,7 @@ import presetReact from "@babel/preset-react";
 import presetTypeScript from "@babel/preset-typescript";
 import { defineConfig } from "vite-pages";
 import { resolve } from "node:path";
+import { existsSync, readdirSync } from "node:fs";
 
 function reactTypeScript() {
   return {
@@ -43,14 +44,12 @@ export default defineConfig({
     minify: false,
     cssMinify: false,
     rollupOptions: {
-      input: {
-        home: resolve(process.cwd(), "static-site/index.html"),
-        recycling: resolve(process.cwd(), "static-site/recycling/index.html"),
-        consulting: resolve(process.cwd(), "static-site/consulting/index.html"),
-        products: resolve(process.cwd(), "static-site/products/index.html"),
-        workshops: resolve(process.cwd(), "static-site/workshops/index.html"),
-        about: resolve(process.cwd(), "static-site/about/index.html"),
-      },
+      input: Object.fromEntries([
+        ["home", resolve(process.cwd(), "static-site/index.html")],
+        ...readdirSync(resolve(process.cwd(), "static-site"), { withFileTypes: true })
+          .filter((entry) => entry.isDirectory() && existsSync(resolve(process.cwd(), "static-site", entry.name, "index.html")))
+          .map((entry) => [entry.name, resolve(process.cwd(), "static-site", entry.name, "index.html")]),
+      ]),
     },
   },
 });

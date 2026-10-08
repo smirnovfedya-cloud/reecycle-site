@@ -5,5 +5,24 @@
   <url><loc>https://reecycle.app/consulting/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://reecycle.app/products/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://reecycle.app/workshops/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://reecycle.app/about/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://reecycle.app/about/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://reecycle.app/waste-audit/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://reecycle.app/waste-composition/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://reecycle.app/vendor-report/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://reecycle.app/regulated-streams-assessment/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://reecycle.app/diversion-potential/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://reecycle.app/esg/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://reecycle.app/bin-infrastructure/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://reecycle.app/managed-collection/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://reecycle.app/material-sorting/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://reecycle.app/organics-diversion/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://reecycle.app/on-site-engagement/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://reecycle.app/downstream-partner/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://reecycle.app/making-products/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://reecycle.app/live-waste/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://reecycle.app/monthly-esg/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://reecycle.app/audit-trail/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://reecycle.app/contamination/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://reecycle.app/benchmarking/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://reecycle.app/data-export/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
 </urlset>

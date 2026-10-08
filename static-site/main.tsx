@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import Home from "../app/page";
 import { AboutPage, ServicePage } from "../app/ServicePages";
 import WorkshopsPage from "../app/WorkshopsPage";
+import { SolutionPage, findSolution } from "../app/SolutionPages";
 import "../app/globals.css";
 
 const segments = window.location.pathname.replace(/\/+$/, "").split("/").filter(Boolean);
@@ -12,6 +13,7 @@ function CurrentPage() {
   if (route === "recycling" || route === "consulting" || route === "products") return <ServicePage type={route} />;
   if (route === "workshops") return <WorkshopsPage />;
   if (route === "about") return <AboutPage />;
+  if (findSolution(route)) return <SolutionPage slug={route} />;
   return <Home />;
 }
 

@@ -1,5 +1,8 @@
 import path from "node:path";
 import { pathToFileURL } from "node:url";
+import { generateSolutionPages } from "./generate-solution-pages.mjs";
+
+await generateSolutionPages();
 
 const viteCli = path.resolve("node_modules/vite-pages/bin/vite.js");
 const separator = process.platform === "win32" ? ";" : ":";

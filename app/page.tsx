@@ -55,9 +55,9 @@ export default function Home() {
         <div className="section-index">01 / HOW WE DO IT</div>
         <div className="manifesto-copy">
           <p className="kicker">Waste reduction is an operating system</p>
-          <h2>Diagnose.<br /><span>Build. Measure.</span></h2>
-          <p className="manifesto-body">We diagnose what is actually being thrown away, build practical recovery flows around each operation, and measure the result.</p>
-          <div className="home-method-steps"><span><b>01 / DIAGNOSE</b>Find the real baseline.</span><span><b>02 / BUILD</b>Make recovery work on site.</span><span><b>03 / MEASURE</b>Keep the result visible.</span></div>
+          <h2>Diagnose.<br /><span>Action. Control.</span></h2>
+          <p className="manifesto-body">We diagnose what is actually being thrown away, put the right recovery actions into operation and keep the result visible.</p>
+          <div className="home-method-steps"><span><b>01 / DIAGNOSE</b>Find the real baseline.</span><span><b>02 / ACTION</b>Build the bins, routes and behaviour change.</span><span><b>03 / CONTROL</b>Measure the result and keep correcting.</span></div>
         </div>
         <OutcomeFlow />
       </section>

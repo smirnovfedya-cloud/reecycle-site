@@ -330,7 +330,7 @@ export function SiteFooter({ current = "" }: { current?: RouteKey }) {
     <>
       <footer className="site-footer">
         <a href={routeHref("", current)} className="site-footer-brand"><img src={assetHref("ree-logo.svg", current)} alt="REE" /><span>The Waste Reduction Company</span></a>
-        <div><span>EXPLORE</span><a href={routeHref("recycling", current)}>Recycling & reporting</a><a href={routeHref("consulting", current)}>Waste reduction consulting</a><a href={routeHref("products", current)}>Circular products</a><a href={routeHref("workshops", current)}>Hands-on workshops</a><a href={routeHref("about", current)}>About REE</a></div>
+        <div><span>EXPLORE</span><a href={routeHref("recycling", current)}>Recycling & reporting</a><a href={routeHref("consulting", current)}>Waste reduction consulting</a><a href={`${routeHref("consulting", current)}#solutions-library`}>Solutions library</a><a href={routeHref("products", current)}>Circular products</a><a href={routeHref("workshops", current)}>Hands-on workshops</a><a href={routeHref("about", current)}>About REE</a></div>
         <div><span>CONTACT</span><a href={whatsappHref} target="_blank" rel="noreferrer">+971 52 851 8783</a><a href="mailto:jaskaran@reecycle.app">jaskaran@reecycle.app</a><p>Dubai & Abu Dhabi, UAE</p></div>
         <div className="site-footer-cta"><span>YOUR FIRST STEP / AT YOUR BUSINESS</span><ActionLink href={siteVisitHref}>Book a free site visit</ActionLink></div>
         <small>© {new Date().getFullYear()} REE Waste Collection and Treatment</small>
