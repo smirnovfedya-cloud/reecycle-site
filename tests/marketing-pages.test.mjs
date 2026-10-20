@@ -58,7 +58,7 @@ test("commercial priorities are present and the calculator stays archived", asyn
   assert.match(blocks, /WHAT REE IS \/ IS NOT/);
   assert.match(blocks, /WHO DOES WHAT \/ WHERE MATERIAL GOES/);
   assert.match(pages, /19,679 kg reported/);
-  assert.match(pages, /523 kg verified/);
+  assert.match(pages, /5,230 kg verified/);
   assert.doesNotMatch(pages, /STANDARD COLLECTION/);
   assert.match(workshops, /One ordinary outlet/);
   assert.match(workshops, /Can we use plastic collected in our own office/);

@@ -178,8 +178,8 @@ function ConsultingPage() {
       <SolutionsLibrary />
       <ClientStrip current="consulting" compact />
       <section className="case-detail-band section-pad">
-        <div><span className="section-index">REAL WASTE. REAL NUMBERS. / TASTE OF DUBAI</span><h2>19,679 kg reported.<br /><em>523 kg verified.</em></h2></div>
-        <div><p>The waste operator’s report showed 19,679 kg. REE’s physical audit found 523 kg in the audited scope. The gap changed the conversation from “how much was collected?” to “what can the business actually prove?”</p><dl><div><dt>Challenge</dt><dd>Reported waste volume could not be reconciled with the event operation.</dd></div><div><dt>Method</dt><dd>Physical bag opening, sorting and weighing by material stream.</dd></div><div><dt>Decision</dt><dd>Use verified material data as the baseline for future reduction and reporting.</dd></div></dl></div>
+        <div><span className="section-index">REAL WASTE. REAL NUMBERS. / TASTE OF DUBAI</span><h2>19,679 kg reported.<br /><em>5,230 kg verified.</em></h2></div>
+        <div><p>The waste operator’s report showed 19,679 kg. REE’s physical audit found 5,230 kg in the audited scope. The gap changed the conversation from “how much was collected?” to “what can the business actually prove?”</p><dl><div><dt>Challenge</dt><dd>Reported waste volume could not be reconciled with the event operation.</dd></div><div><dt>Method</dt><dd>Physical bag opening, sorting and weighing by material stream.</dd></div><div><dt>Decision</dt><dd>Use verified material data as the baseline for future reduction and reporting.</dd></div></dl></div>
       </section>
       <SiteVisitBand current="consulting" title="Put the first decision on evidence, not assumptions." />
       <IndependenceBlock />
