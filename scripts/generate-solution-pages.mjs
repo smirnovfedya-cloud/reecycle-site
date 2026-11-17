@@ -65,6 +65,12 @@ export async function generateSolutionPages() {
   <meta property="og:url" content="${canonical}" />
   <meta property="og:image" content="${siteUrl}/og.png" />
   <meta name="twitter:card" content="summary_large_image" />
+  <script async src="https://www.googletagmanager.com/gtm.js?id=G-LJJ0ZDZVH8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  </script>
   <script type="application/ld+json">${JSON.stringify(structuredData).replaceAll("<", "\\u003c")}</script>
 </head>
 <body>
