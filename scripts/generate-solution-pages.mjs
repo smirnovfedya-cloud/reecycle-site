@@ -89,6 +89,7 @@ export async function generateSolutionPages() {
     gtag('js', new Date());
   </script>
   <script type="application/ld+json">${JSON.stringify(structuredData).replaceAll("<", "\\u003c")}</script>
+  <meta name="google-site-verification" content="_yy1-P36DrUHXeJgr9Lp7x8fvFwZPeYwUhKapJE7Z0M" />
 </head>
 <body>
   <div id="root"><main><h1>${escapeHtml(solution.title)}</h1><p>${escapeHtml(solution.lede)}</p><ul>${fallbackItems}</ul><p>REE serves businesses across the United Arab Emirates. Call +971 52 851 8783 or email jaskaran@reecycle.app.</p></main></div>

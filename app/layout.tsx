@@ -56,6 +56,7 @@ export default function RootLayout({
         <noscript>
           <img height="1" width="1" style={{ display: "none" }} src="https://www.facebook.com/tr?id=1644121047197168&ev=PageView&noscript=1" />
         </noscript>
+        <meta name="google-site-verification" content="_yy1-P36DrUHXeJgr9Lp7x8fvFwZPeYwUhKapJE7Z0M" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
